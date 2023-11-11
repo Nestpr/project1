@@ -3,13 +3,13 @@ import java.time.Instant;
 
 public class Weather {
 	public Instant timeInstant;
-	public int rain;
-	public int wind;
-	public int temperature;
-	public int humidity;
+	public double rain;
+	public double wind;
+	public double temperature;
+	public double humidity;
 	public Location location;
 
-	public Weather(Instant timeInstant, int rain, int wind, int temperature, int humidity, Location location) {
+	public Weather(Instant timeInstant, double rain, double wind, double temperature, double humidity, Location location) {
 		this.timeInstant = timeInstant;
 		this.rain = rain;
 		this.wind = wind;

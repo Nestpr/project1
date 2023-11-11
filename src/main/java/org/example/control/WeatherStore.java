@@ -1,4 +1,5 @@
 package org.example.control;
 
-public class WeatherStore {
+public interface WeatherStore {
+
 }
