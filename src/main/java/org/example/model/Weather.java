@@ -17,4 +17,28 @@ public class Weather {
 		this.humidity = humidity;
 		this.location = location;
 	}
+
+	public Instant getTimeInstant() {
+		return timeInstant;
+	}
+
+	public double getRain() {
+		return rain;
+	}
+
+	public double getWind() {
+		return wind;
+	}
+
+	public double getTemperature() {
+		return temperature;
+	}
+
+	public double getHumidity() {
+		return humidity;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
 }

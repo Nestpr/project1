@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="first commit">
+    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="-New InstantCreatorList method.&#10;-All the methods of OpenWeatherMapSupplier are implemented.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/OpenWeatherMapSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/OpenWeatherMapSupplier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/SQLiteWeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/SQLiteWeatherStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Location.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Weather.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Weather.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699101258510</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="-New InstantCreatorList method.&#10;-All the methods of OpenWeatherMapSupplier are implemented.">
+      <option name="closed" value="true" />
+      <created>1699723473750</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699723473751</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -128,7 +134,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="-New InstantCreatorList method.&#10;-All the methods of OpenWeatherMapSupplier are implemented." />
+    <option name="LAST_COMMIT_MESSAGE" value="-New InstantCreatorList method.&#10;-All the methods of OpenWeatherMapSupplier are implemented." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

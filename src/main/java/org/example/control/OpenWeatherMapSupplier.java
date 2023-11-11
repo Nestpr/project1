@@ -20,7 +20,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 	private static String appiKey = "82272d9470b9aa37fb9c5fa221ea12be";
 	private static String weatherTemplate = "https://api.openweathermap.org/data/2.5/forecast?";
 
-	public static void setWeatherTemplate(String weatherTemplate) {
+	public void setWeatherTemplate(String weatherTemplate) {
 		OpenWeatherMapSupplier.weatherTemplate = weatherTemplate;
 	}
 
@@ -28,7 +28,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 		OpenWeatherMapSupplier.appiKey = appiKey;
 	}
 
-	public static String getUrl(Location location) {
+	public String getUrl(Location location) {
 		String longitudStr = Double.toString(location.getLongitude());
 		String latitudStr = Double.toString(location.getLatitude());
 
@@ -37,7 +37,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 		return url;
 	}
 
-	public static String getServerResponse(Location location) throws IOException {
+	public String getServerResponse(Location location) throws IOException {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
 		HttpGet httpGet = new HttpGet(getUrl(location));
@@ -53,7 +53,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 
 	}
 
-	public static List<Weather> getWeatherList(Location location, List<Instant> instantList) throws IOException {
+	public List<Weather> getWeatherList(Location location, List<Instant> instantList) throws IOException {
 		String jsonString = getServerResponse(location);
 		List<Weather> weatherList = new ArrayList<>();
 		List<Long> longList = new ArrayList<>();

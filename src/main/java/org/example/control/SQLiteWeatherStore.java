@@ -1,9 +1,13 @@
 package org.example.control;
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import org.example.model.Weather;
+
+import java.sql.*;
+import java.util.List;
+
 public class SQLiteWeatherStore {
+
+
+	/*
 	public static Connection connect(String dbPath) {
 		Connection conn = null;
 		try {
@@ -23,18 +27,58 @@ public class SQLiteWeatherStore {
 				"rain REAL,\n" +
 				"wind REAL,\n" +
 				"temperature REAL,\n" +
-				"humidity REAL,\n"+
+				"humidity REAL\n"+
 				");");
 	}
 
 	private static boolean insert(Statement statement) throws SQLException {
-		return statement.execute("INSERT INTO products (id,name ,prize)\n" +
-				"VALUES(1, 'hibike', 1995.9),(2, 'orbea', 995.5);");
+		return statement.execute("INSERT INTO weather (timeInstant, rain, wind, temperature, humidity)\n" +
+				"VALUES('someTime', 5.0, 10.0, 25.0, 0.8);");
 	}
 
+	*/
+	private static final String JDBC_URL = "jdbc:sqlite:weather_database.db";
 
+	public void WeatherDatabase() {
+		// Load SQLite JDBC driver
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
+		// Create Weather table if not exists
+		try (Connection connection = DriverManager.getConnection(JDBC_URL);
+			 PreparedStatement statement = connection.prepareStatement(
+					 "CREATE TABLE IF NOT EXISTS Weather (" +
+							 "timeInstant TEXT," +
+							 "rain REAL," +
+							 "wind REAL," +
+							 "temperature REAL," +
+							 "humidity REAL)"
+			 )) {
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-
-
+	public void insertWeatherData(List<Weather> weatherList) {
+		try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
+			for (Weather weather : weatherList) {
+				try (PreparedStatement statement = connection.prepareStatement(
+						"INSERT INTO Weather (timeInstant, rain, wind, temperature, humidity) VALUES (?, ?, ?, ?, ?)"
+				)) {
+					statement.setString(1, weather.getTimeInstant().toString());
+					statement.setDouble(2, weather.getRain());
+					statement.setDouble(3, weather.getWind());
+					statement.setDouble(4, weather.getTemperature());
+					statement.setDouble(5, weather.getHumidity());
+					statement.executeUpdate();
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
