@@ -4,7 +4,7 @@ import org.example.model.Weather;
 import java.sql.*;
 import java.util.List;
 
-public class SQLiteWeatherStore {
+public class SQLiteWeatherStore implements WeatherStore{
 
 
 	/*
@@ -37,8 +37,12 @@ public class SQLiteWeatherStore {
 	}
 
 	*/
-	private static final String JDBC_URL = "jdbc:sqlite:weather_database.db";
+	private final String JDBC_URL = "jdbc:sqlite:weather_database.db";
 
+	public void storeWeather(List<Weather> weatherList){
+		this.WeatherDatabase();
+		this.insertWeather(weatherList);
+	}
 	public void WeatherDatabase() {
 		// Load SQLite JDBC driver
 		try {
@@ -50,12 +54,14 @@ public class SQLiteWeatherStore {
 		// Create Weather table if not exists
 		try (Connection connection = DriverManager.getConnection(JDBC_URL);
 			 PreparedStatement statement = connection.prepareStatement(
-					 "CREATE TABLE IF NOT EXISTS Weather (" +
+					 "CREATE TABLE IF NOT EXISTS Weather" + " (" +
+							 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
 							 "timeInstant TEXT," +
 							 "rain REAL," +
 							 "wind REAL," +
 							 "temperature REAL," +
-							 "humidity REAL)"
+							 "humidity REAL," +
+							 "location TEXT)"
 			 )) {
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -63,22 +69,59 @@ public class SQLiteWeatherStore {
 		}
 	}
 
-	public void insertWeatherData(List<Weather> weatherList) {
+	/*
+	public void insertWeather(List<Weather> weatherList) {
 		try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-			for (Weather weather : weatherList) {
+
 				try (PreparedStatement statement = connection.prepareStatement(
-						"INSERT INTO Weather (timeInstant, rain, wind, temperature, humidity) VALUES (?, ?, ?, ?, ?)"
+						"INSERT OR REPLACE INTO Weather (timeInstant, rain, wind, temperature, humidity, location) VALUES (?, ?, ?, ?, ?, ?)"
 				)) {
+					for (Weather weather : weatherList) {
+					System.out.println("SQL Statement: " + statement.toString());
+					System.out.println("Weather: " + weather.getLocation().getIsland());
+
 					statement.setString(1, weather.getTimeInstant().toString());
 					statement.setDouble(2, weather.getRain());
 					statement.setDouble(3, weather.getWind());
 					statement.setDouble(4, weather.getTemperature());
 					statement.setDouble(5, weather.getHumidity());
+					statement.setString(6, weather.getLocation().getIsland());
 					statement.executeUpdate();
 				}
+					System.out.println("Weather data inserted successfully.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
+	 */
+
+	public void insertWeather(List<Weather> weatherList) {
+		try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
+			try (PreparedStatement statement = connection.prepareStatement(
+					"INSERT OR REPLACE INTO Weather (id, timeInstant, rain, wind, temperature, humidity, location) VALUES (null, ?, ?, ?, ?, ?, ?)"
+			)) {
+				for (Weather weather : weatherList) {
+					System.out.println("SQL Statement: " + statement.toString());
+					System.out.println("Weather: " + weather.getLocation().getIsland());
+
+					statement.setNull(1, Types.INTEGER);
+					statement.setString(1, weather.getTimeInstant().toString());
+					statement.setDouble(2, weather.getRain());
+					statement.setDouble(3, weather.getWind());
+					statement.setDouble(4, weather.getTemperature());
+					statement.setDouble(5, weather.getHumidity());
+					statement.setString(6, weather.getLocation().getIsland());
+
+					// Execute the statement inside the loop
+					statement.executeUpdate();
+				}
+				System.out.println("Weather data inserted successfully.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

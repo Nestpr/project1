@@ -28,6 +28,23 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 		OpenWeatherMapSupplier.appiKey = appiKey;
 	}
 
+	public List<Weather> getWeather(Location location, List<Instant> instantList){
+		String url = this.getUrl(location);
+		String body = null;
+		try {
+			body = this.getServerResponse(location, url);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		List<Weather> weatherList = null;
+		try {
+			weatherList = this.getWeatherList(location, instantList, url, body);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		return weatherList;
+	}
+
 	public String getUrl(Location location) {
 		String longitudStr = Double.toString(location.getLongitude());
 		String latitudStr = Double.toString(location.getLatitude());
@@ -37,7 +54,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 		return url;
 	}
 
-	public String getServerResponse(Location location) throws IOException {
+	public String getServerResponse(Location location, String url) throws IOException {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
 		HttpGet httpGet = new HttpGet(getUrl(location));
@@ -53,8 +70,8 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 
 	}
 
-	public List<Weather> getWeatherList(Location location, List<Instant> instantList) throws IOException {
-		String jsonString = getServerResponse(location);
+	public List<Weather> getWeatherList(Location location, List<Instant> instantList,String url, String body) throws IOException {
+		String jsonString = getServerResponse(location, url);
 		List<Weather> weatherList = new ArrayList<>();
 		List<Long> longList = new ArrayList<>();
 		for (Instant instant : instantList) {

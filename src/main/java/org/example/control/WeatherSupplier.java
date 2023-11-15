@@ -9,10 +9,6 @@ import java.time.Instant;
 import java.util.List;
 
 public interface WeatherSupplier {
-	public String getUrl(Location location);
-
-	public String getServerResponse(Location location) throws IOException;
-
-	public List<Weather> getWeatherList(Location location, List<Instant> instantList) throws IOException;
+	public List<Weather> getWeather(Location location, List<Instant> instantList);
 
 }

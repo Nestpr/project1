@@ -53,24 +53,34 @@ public class Main {
 		islands.add(new Location(28.964137060031142, -13.552181103779592, "Arrecife"));
 		islands.add(new Location(29.232734043688364, -13.501880960490942, "Caleta de Sebo"));
 
-
+		String path = "jdbc:sqlite:weather_database.db";
 
 		List<Instant> instantList = generateInstantListAtHour(12, 5);
 
+		OpenWeatherMapSupplier openWeatherMapSupplier = new OpenWeatherMapSupplier();
 
-		//List<Long> longList = new ArrayList<>();
+		/*
+		for (Location location : islands) {
 
-		//for (Instant instant : instantList) {
-		//	longList.add(instant.getEpochSecond());
-		//}
+			String url = openWeatherMapSupplier.getUrl(location);
+			String body = openWeatherMapSupplier.getServerResponse(location, url);
+			List<Weather>weathers = openWeatherMapSupplier.getWeather(location, instantList);
+			System.out.println(weathers.get(0));
+			System.out.println(weathers.get(1));
+			System.out.println(weathers.get(2));
+			System.out.println(weathers.get(3));
+			System.out.println(weathers.get(4));
 
-		Location location = islands.get(0);
-		OpenWeatherMapSupplier ejemplo1 = new OpenWeatherMapSupplier();
-		List<Weather> weatherList = ejemplo1.getWeatherList(location,instantList);
 
-		SQLiteWeatherStore weatherDatabase = new SQLiteWeatherStore();
-		weatherDatabase.WeatherDatabase();
-		weatherDatabase.insertWeatherData(weatherList);
+		}
+		*/
+
+		SQLiteWeatherStore sqLiteWeatherStore = new SQLiteWeatherStore();
+
+		WeatherController weatherController = new WeatherController(islands, openWeatherMapSupplier, sqLiteWeatherStore, instantList);
+
+		weatherController.execute(islands, openWeatherMapSupplier, sqLiteWeatherStore, instantList);
+		
 
 	}
 
