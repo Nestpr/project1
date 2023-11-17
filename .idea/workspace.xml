@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="-Control module implemented">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/InstantCreatorList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/InstantCreatorList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/OpenWeatherMapSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/OpenWeatherMapSupplier.java" afterDir="false" />
+    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="-Final Version(Timer implemented)">
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/SQLiteWeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/SQLiteWeatherStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_database.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700066429435</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="-Final Version(Timer implemented)">
+      <option name="closed" value="true" />
+      <created>1700244605813</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1700244605813</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -161,7 +163,8 @@
     <MESSAGE value="-New InstantCreatorList method.&#10;-All the methods of OpenWeatherMapSupplier are implemented." />
     <MESSAGE value="-SQLite Implemented" />
     <MESSAGE value="-Control module implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Control module implemented" />
+    <MESSAGE value="-Final Version(Timer implemented)" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Final Version(Timer implemented)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

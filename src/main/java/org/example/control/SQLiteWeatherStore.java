@@ -21,7 +21,6 @@ public class SQLiteWeatherStore implements WeatherStore {
 			e.printStackTrace();
 		}
 
-		// Create Weather table if not exists for the specific location
 		String tableName = "Weather_" + location.replace(" ", "_");
 		try (Connection connection = DriverManager.getConnection(System.getenv("path"));
 			 PreparedStatement statement = connection.prepareStatement(
@@ -38,27 +37,6 @@ public class SQLiteWeatherStore implements WeatherStore {
 			e.printStackTrace();
 		}
 	}
-
-	/*
-	public void insertWeather(Weather weather) {
-		String tableName = "Weather_" + weather.getLocation().getIsland().replace(" ", "_");
-		try (Connection connection = DriverManager.getConnection(JDBC_URL);
-			 PreparedStatement statement = connection.prepareStatement(
-					 "INSERT OR REPLACE INTO " + tableName + " (id, timeInstant, rain, wind, temperature, humidity) VALUES (null, ?, ?, ?, ?, ?)"
-			 )) {
-			statement.setString(1, weather.getTimeInstant().toString());
-			statement.setDouble(2, weather.getRain());
-			statement.setDouble(3, weather.getWind());
-			statement.setDouble(4, weather.getTemperature());
-			statement.setDouble(5, weather.getHumidity());
-
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	 */
 
 	private void insertWeather(Weather weather) {
 		String tableName = "Weather_" + weather.getLocation().getIsland().replace(" ", "_");
@@ -79,7 +57,7 @@ public class SQLiteWeatherStore implements WeatherStore {
 			}
 
 			if (recordExists) {
-				// If record exists, update the existing record
+
 				String updateQuery = "UPDATE " + tableName + " SET timeInstant = ?, rain = ?, wind = ?, temperature = ?, humidity = ? WHERE timeInstant = ? AND rain = ? AND wind = ? AND temperature = ? AND humidity = ?";
 				try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
 					updateStatement.setString(1, weather.getTimeInstant().toString());
@@ -87,7 +65,7 @@ public class SQLiteWeatherStore implements WeatherStore {
 					updateStatement.setDouble(3, weather.getWind());
 					updateStatement.setDouble(4, weather.getTemperature());
 					updateStatement.setDouble(5, weather.getHumidity());
-					// Set parameters for the WHERE clause
+
 					updateStatement.setString(6, weather.getTimeInstant().toString());
 					updateStatement.setDouble(7, weather.getRain());
 					updateStatement.setDouble(8, weather.getWind());
@@ -97,7 +75,7 @@ public class SQLiteWeatherStore implements WeatherStore {
 					updateStatement.executeUpdate();
 				}
 			} else {
-				// If record does not exist, insert a new record
+
 				String insertQuery = "INSERT OR REPLACE INTO " + tableName + " (id, timeInstant, rain, wind, temperature, humidity) VALUES (null, ?, ?, ?, ?, ?)";
 				try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
 					insertStatement.setString(1, weather.getTimeInstant().toString());
@@ -110,7 +88,6 @@ public class SQLiteWeatherStore implements WeatherStore {
 				}
 			}
 		} catch (SQLException e) {
-			// Handle the exception (log or throw a custom exception)
 			e.printStackTrace();
 		}
 	}
