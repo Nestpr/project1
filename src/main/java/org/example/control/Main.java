@@ -38,7 +38,6 @@ import static org.example.control.OpenWeatherMapSupplier.*;
 public class Main {
 	public static void main(String[] args) throws IOException {
 
-
 		List<Location> islands = new ArrayList<>();
 		islands.add(new Location(28.126116508278074, -15.447563715116386, "Las Palmas de Gran Canaria"));
 		islands.add(new Location(28.433615434096133, -16.303736508244132, "Santa Cruz de Tenerife"));
