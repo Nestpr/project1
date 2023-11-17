@@ -10,8 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class WeatherController {
+public class WeatherController{
 	private List<Location> locations;
 	private List<Instant> timeInstant;
 	private WeatherSupplier weatherSupplier;
@@ -24,49 +26,25 @@ public class WeatherController {
 		this.timeInstant = timeInstant;
 	}
 
-	public void execute(List<Location> locations, WeatherSupplier weatherSupplier, WeatherStore weatherStore, List<Instant> instantList){
+	public void execute(){
 		for (Location location : locations) {
-			List<Weather> weatherList = weatherSupplier.getWeather(location, instantList);
+			List<Weather> weatherList = weatherSupplier.getWeather(location, timeInstant);
 			weatherStore.storeWeather(weatherList);
 		}
 	}
 
+	public void timer(){
+		Timer timer = new Timer();
 
-
-
-
-	/*
-	public void CreateWeatherDataBase(List<Location>locations) {
-		for (Location location : locations) {
-			weatherStore.WeatherDatabase(location.getIsland());
-		}
-	}
-
-	public void InsertWeatherData(List<Location>locations, List<Instant> timeInstant){
-		for (Location location : locations) {
-			try {
-				List<Weather> weatherList = weatherSupplier.getWeatherList(location, timeInstant);
-				try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-					for (Weather weather : weatherList) {
-						try (PreparedStatement statement = connection.prepareStatement(
-								"INSERT OR REPLACE INTO Weather (timeInstant, rain, wind, temperature, humidity) VALUES (?, ?, ?, ?, ?)"
-						)) {
-							statement.setString(1, weather.getTimeInstant().toString());
-							statement.setDouble(2, weather.getRain());
-							statement.setDouble(3, weather.getWind());
-							statement.setDouble(4, weather.getTemperature());
-							statement.setDouble(5, weather.getHumidity());
-							statement.executeUpdate();
-						}
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			} catch (IOException e) {
-				throw new RuntimeException(e);
+		long periodo = 6 * 60 * 60 * 1000;
+		TimerTask weatherTask = new TimerTask() {
+			@Override
+			public void run() {
+				execute();
+				System.out.println("La función se ejecutó");
 			}
-		}
-	}
+		};
 
-	 */
+		timer.schedule(weatherTask, 0, periodo);
+	}
 }

@@ -17,15 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OpenWeatherMapSupplier implements WeatherSupplier {
-	private static String appiKey = "82272d9470b9aa37fb9c5fa221ea12be";
 	private static String weatherTemplate = "https://api.openweathermap.org/data/2.5/forecast?";
 
 	public void setWeatherTemplate(String weatherTemplate) {
 		OpenWeatherMapSupplier.weatherTemplate = weatherTemplate;
-	}
-
-	public static void setAppiKey(String appiKey) {
-		OpenWeatherMapSupplier.appiKey = appiKey;
 	}
 
 	public List<Weather> getWeather(Location location, List<Instant> instantList){
@@ -49,7 +44,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 		String longitudStr = Double.toString(location.getLongitude());
 		String latitudStr = Double.toString(location.getLatitude());
 
-		String url = weatherTemplate + "lat=" + longitudStr + "&lon=" + latitudStr + "&appid=" + appiKey + "&units=metric";
+		String url = weatherTemplate + "lat=" + longitudStr + "&lon=" + latitudStr + "&appid=" + System.getenv("APPI") + "&units=metric";
 
 		return url;
 	}

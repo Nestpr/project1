@@ -4,64 +4,34 @@ import org.example.model.Weather;
 import java.sql.*;
 import java.util.List;
 
-public class SQLiteWeatherStore implements WeatherStore{
 
+public class SQLiteWeatherStore implements WeatherStore {
 
-	/*
-	public static Connection connect(String dbPath) {
-		Connection conn = null;
-		try {
-			String url = "jdbc:sqlite:" + dbPath;
-			conn = DriverManager.getConnection(url);
-			System.out.println("Connection to SQLite has been established.");
-			return conn;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+	public void storeWeather(List<Weather> weatherList) {
+		for (Weather weather : weatherList) {
+			this.WeatherDatabase(weather.getLocation().getIsland());
+			this.insertWeather(weather);
 		}
-		return conn;
 	}
 
-	private static void createTable(Statement statement) throws SQLException {
-		statement.execute("CREATE TABLE IF NOT EXISTS weather (" +
-				"timeInstant TEXT,\n" +
-				"rain REAL,\n" +
-				"wind REAL,\n" +
-				"temperature REAL,\n" +
-				"humidity REAL\n"+
-				");");
-	}
-
-	private static boolean insert(Statement statement) throws SQLException {
-		return statement.execute("INSERT INTO weather (timeInstant, rain, wind, temperature, humidity)\n" +
-				"VALUES('someTime', 5.0, 10.0, 25.0, 0.8);");
-	}
-
-	*/
-	private final String JDBC_URL = "jdbc:sqlite:weather_database.db";
-
-	public void storeWeather(List<Weather> weatherList){
-		this.WeatherDatabase();
-		this.insertWeather(weatherList);
-	}
-	public void WeatherDatabase() {
-		// Load SQLite JDBC driver
+	public void WeatherDatabase(String location) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		// Create Weather table if not exists
-		try (Connection connection = DriverManager.getConnection(JDBC_URL);
+		// Create Weather table if not exists for the specific location
+		String tableName = "Weather_" + location.replace(" ", "_");
+		try (Connection connection = DriverManager.getConnection(System.getenv("path"));
 			 PreparedStatement statement = connection.prepareStatement(
-					 "CREATE TABLE IF NOT EXISTS Weather" + " (" +
+					 "CREATE TABLE IF NOT EXISTS " + tableName + " (" +
 							 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
 							 "timeInstant TEXT," +
 							 "rain REAL," +
 							 "wind REAL," +
 							 "temperature REAL," +
-							 "humidity REAL," +
-							 "location TEXT)"
+							 "humidity REAL)"
 			 )) {
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -70,26 +40,19 @@ public class SQLiteWeatherStore implements WeatherStore{
 	}
 
 	/*
-	public void insertWeather(List<Weather> weatherList) {
-		try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
+	public void insertWeather(Weather weather) {
+		String tableName = "Weather_" + weather.getLocation().getIsland().replace(" ", "_");
+		try (Connection connection = DriverManager.getConnection(JDBC_URL);
+			 PreparedStatement statement = connection.prepareStatement(
+					 "INSERT OR REPLACE INTO " + tableName + " (id, timeInstant, rain, wind, temperature, humidity) VALUES (null, ?, ?, ?, ?, ?)"
+			 )) {
+			statement.setString(1, weather.getTimeInstant().toString());
+			statement.setDouble(2, weather.getRain());
+			statement.setDouble(3, weather.getWind());
+			statement.setDouble(4, weather.getTemperature());
+			statement.setDouble(5, weather.getHumidity());
 
-				try (PreparedStatement statement = connection.prepareStatement(
-						"INSERT OR REPLACE INTO Weather (timeInstant, rain, wind, temperature, humidity, location) VALUES (?, ?, ?, ?, ?, ?)"
-				)) {
-					for (Weather weather : weatherList) {
-					System.out.println("SQL Statement: " + statement.toString());
-					System.out.println("Weather: " + weather.getLocation().getIsland());
-
-					statement.setString(1, weather.getTimeInstant().toString());
-					statement.setDouble(2, weather.getRain());
-					statement.setDouble(3, weather.getWind());
-					statement.setDouble(4, weather.getTemperature());
-					statement.setDouble(5, weather.getHumidity());
-					statement.setString(6, weather.getLocation().getIsland());
-					statement.executeUpdate();
-				}
-					System.out.println("Weather data inserted successfully.");
-			}
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -97,29 +60,57 @@ public class SQLiteWeatherStore implements WeatherStore{
 
 	 */
 
-	public void insertWeather(List<Weather> weatherList) {
-		try (Connection connection = DriverManager.getConnection(JDBC_URL)) {
-			try (PreparedStatement statement = connection.prepareStatement(
-					"INSERT OR REPLACE INTO Weather (id, timeInstant, rain, wind, temperature, humidity, location) VALUES (null, ?, ?, ?, ?, ?, ?)"
-			)) {
-				for (Weather weather : weatherList) {
-					System.out.println("SQL Statement: " + statement.toString());
-					System.out.println("Weather: " + weather.getLocation().getIsland());
+	private void insertWeather(Weather weather) {
+		String tableName = "Weather_" + weather.getLocation().getIsland().replace(" ", "_");
+		try (Connection connection = DriverManager.getConnection(System.getenv("path"))) {
+			// Check if a record with the same values already exists
+			boolean recordExists;
+			String selectQuery = "SELECT id FROM " + tableName + " WHERE timeInstant = ? AND rain = ? AND wind = ? AND temperature = ? AND humidity = ?";
+			try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
+				selectStatement.setString(1, weather.getTimeInstant().toString());
+				selectStatement.setDouble(2, weather.getRain());
+				selectStatement.setDouble(3, weather.getWind());
+				selectStatement.setDouble(4, weather.getTemperature());
+				selectStatement.setDouble(5, weather.getHumidity());
 
-					statement.setNull(1, Types.INTEGER);
-					statement.setString(1, weather.getTimeInstant().toString());
-					statement.setDouble(2, weather.getRain());
-					statement.setDouble(3, weather.getWind());
-					statement.setDouble(4, weather.getTemperature());
-					statement.setDouble(5, weather.getHumidity());
-					statement.setString(6, weather.getLocation().getIsland());
-
-					// Execute the statement inside the loop
-					statement.executeUpdate();
+				try (ResultSet resultSet = selectStatement.executeQuery()) {
+					recordExists = resultSet.next();
 				}
-				System.out.println("Weather data inserted successfully.");
+			}
+
+			if (recordExists) {
+				// If record exists, update the existing record
+				String updateQuery = "UPDATE " + tableName + " SET timeInstant = ?, rain = ?, wind = ?, temperature = ?, humidity = ? WHERE timeInstant = ? AND rain = ? AND wind = ? AND temperature = ? AND humidity = ?";
+				try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+					updateStatement.setString(1, weather.getTimeInstant().toString());
+					updateStatement.setDouble(2, weather.getRain());
+					updateStatement.setDouble(3, weather.getWind());
+					updateStatement.setDouble(4, weather.getTemperature());
+					updateStatement.setDouble(5, weather.getHumidity());
+					// Set parameters for the WHERE clause
+					updateStatement.setString(6, weather.getTimeInstant().toString());
+					updateStatement.setDouble(7, weather.getRain());
+					updateStatement.setDouble(8, weather.getWind());
+					updateStatement.setDouble(9, weather.getTemperature());
+					updateStatement.setDouble(10, weather.getHumidity());
+
+					updateStatement.executeUpdate();
+				}
+			} else {
+				// If record does not exist, insert a new record
+				String insertQuery = "INSERT OR REPLACE INTO " + tableName + " (id, timeInstant, rain, wind, temperature, humidity) VALUES (null, ?, ?, ?, ?, ?)";
+				try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
+					insertStatement.setString(1, weather.getTimeInstant().toString());
+					insertStatement.setDouble(2, weather.getRain());
+					insertStatement.setDouble(3, weather.getWind());
+					insertStatement.setDouble(4, weather.getTemperature());
+					insertStatement.setDouble(5, weather.getHumidity());
+
+					insertStatement.executeUpdate();
+				}
 			}
 		} catch (SQLException e) {
+			// Handle the exception (log or throw a custom exception)
 			e.printStackTrace();
 		}
 	}

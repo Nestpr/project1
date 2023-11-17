@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="-SQLite Implemented">
+    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="-Control module implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/InstantCreatorList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/InstantCreatorList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/OpenWeatherMapSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/OpenWeatherMapSupplier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/SQLiteWeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/SQLiteWeatherStore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/WeatherSupplier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_database.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,6 +61,10 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="APPI" value="82272d9470b9aa37fb9c5fa221ea12be" />
+        <env name="path" value="jdbc:sqlite:weather_database.db" />
+      </envs>
       <option name="MAIN_CLASS_NAME" value="org.example.control.Main" />
       <module name="project1" />
       <extension name="coverage">
@@ -87,6 +90,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.OpenWeatherMapSupplier" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -127,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699726987007</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="-Control module implemented">
+      <option name="closed" value="true" />
+      <created>1700066429435</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1700066429435</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -145,7 +160,8 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="-New InstantCreatorList method.&#10;-All the methods of OpenWeatherMapSupplier are implemented." />
     <MESSAGE value="-SQLite Implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="-SQLite Implemented" />
+    <MESSAGE value="-Control module implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Control module implemented" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -154,20 +170,6 @@
           <properties class="java.lang.UnsupportedOperationException" package="java.lang" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/control/Main.java</url>
-          <line>61</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/control/OpenWeatherMapSupplier.java</url>
-          <line>30</line>
-          <properties class="org.example.control.OpenWeatherMapSupplier" method="getWeather">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
