@@ -44,7 +44,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 		String longitudStr = Double.toString(location.getLongitude());
 		String latitudStr = Double.toString(location.getLatitude());
 
-		String url = weatherTemplate + "lat=" + longitudStr + "&lon=" + latitudStr + "&appid=" + System.getenv("APPI") + "&units=metric";
+		String url = weatherTemplate + "lat=" + longitudStr + "&lon=" + latitudStr + "&appid=" + System.getenv("API") + "&units=metric";
 
 		return url;
 	}

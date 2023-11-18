@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="-Final Version(Timer implemented)">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/SQLiteWeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/SQLiteWeatherStore.java" afterDir="false" />
+    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="-Final Project">
+      <change afterPath="$PROJECT_DIR$/Captura de pantalla 2023-11-17 a las 18.59.21.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Captura de pantalla 2023-11-17 a las 18.59.30.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Captura de pantalla 2023-11-17 a las 19.07.22.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Captura de pantalla 2023-11-17 a las 19.11.57.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Captura de pantalla 2023-11-17 a las 22.59.15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Captura de pantalla 2023-11-17 a las 23.38.16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Captura de pantalla 2023-11-17 a las 23.41.49.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/control/OpenWeatherMapSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/control/OpenWeatherMapSupplier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +29,23 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Nestpr&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="f92a9ab4-a03d-4af4-8c43-4e992a56afc6" />
+        <option name="url" value="https://github.com/Nestpr/project1.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -50,17 +75,19 @@
       <recent name="$PROJECT_DIR$/target" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
-        <env name="APPI" value="82272d9470b9aa37fb9c5fa221ea12be" />
+        <env name="API" value="82272d9470b9aa37fb9c5fa221ea12be" />
         <env name="path" value="jdbc:sqlite:weather_database.db" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="org.example.control.Main" />
       <module name="project1" />
+      <option name="PROGRAM_PARAMETERS" value="appiKey=82272d9470b9aa37fb9c5fa221ea12be path=jdbc:sqlite:weather_database.db" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.control.*" />
@@ -144,7 +171,23 @@
       <option name="project" value="LOCAL" />
       <updated>1700244605813</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="-Final Version">
+      <option name="closed" value="true" />
+      <created>1700244746191</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1700244746191</updated>
+    </task>
+    <task id="LOCAL-00007" summary="-Final Project">
+      <option name="closed" value="true" />
+      <created>1700244812497</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1700244812497</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -164,7 +207,9 @@
     <MESSAGE value="-SQLite Implemented" />
     <MESSAGE value="-Control module implemented" />
     <MESSAGE value="-Final Version(Timer implemented)" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Final Version(Timer implemented)" />
+    <MESSAGE value="-Final Version" />
+    <MESSAGE value="-Final Project" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Final Project" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
