@@ -5,7 +5,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstantCreatorList {
+public class InstantCreator {
 	public static List<Instant> generateInstantListAtHour(int hour, int numberOfDays) {
 		List<Instant> instantList = new ArrayList<>();
 

@@ -1,41 +1,12 @@
 package org.example.control;
 import org.example.model.Location;
-import org.example.model.Weather;
-
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.example.model.Weather;
-import org.glassfish.json.JsonUtil;
-
 import java.time.Instant;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-
 import java.io.*;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import javax.json.JsonArray;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
+import static org.example.control.InstantCreator.generateInstantListAtHour;
 
-import static org.example.control.InstantCreatorList.generateInstantListAtHour;
-import static org.example.control.OpenWeatherMapSupplier.*;
-
-public class Main {
+public class Main1 {
 	public static void main(String[] args) throws IOException {
 
 		List<Location> islands = new ArrayList<>();
@@ -48,13 +19,16 @@ public class Main {
 		islands.add(new Location(28.964137060031142, -13.552181103779592, "Arrecife"));
 		islands.add(new Location(29.232734043688364, -13.501880960490942, "Caleta de Sebo"));
 
+		String brokerURL = "tcp://localhost:61616";
+		String topicName = "YourTopicName";
+
 		List<Instant> instantList = generateInstantListAtHour(12, 5);
 
 		OpenWeatherMapSupplier openWeatherMapSupplier = new OpenWeatherMapSupplier();
 
-		SQLiteWeatherStore sqLiteWeatherStore = new SQLiteWeatherStore();
+		JmsWeatherStore jmsWeatherStore = new JmsWeatherStore(brokerURL, topicName);
 
-		WeatherController weatherController = new WeatherController(islands, openWeatherMapSupplier, sqLiteWeatherStore, instantList);
+		WeatherController weatherController = new WeatherController(islands, openWeatherMapSupplier, jmsWeatherStore, instantList);
 
 		weatherController.timer();
 

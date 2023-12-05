@@ -82,14 +82,15 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 					double rain = weather.getJsonNumber("pop").doubleValue();
 					JsonObject windobject = weather.getJsonObject("wind");
 					double wind = windobject.getJsonNumber("speed").doubleValue();
+					String ss = "OpenWeatherMapSupplier";
+					Instant timeInstant = Instant.now();
 					JsonObject mainObject = weather.getJsonObject("main");
 					double temperature = mainObject.getJsonNumber("temp").doubleValue();
 					double humidity = mainObject.getJsonNumber("humidity").doubleValue();
-					Instant instant = Instant.ofEpochSecond(time);
-					weatherList.add(new Weather(instant, rain, wind, temperature, humidity, location));
+					Instant predictionInstant = Instant.ofEpochSecond(time);
+					weatherList.add(new Weather(predictionInstant, rain, wind, temperature, humidity, location, timeInstant, ss));
 				}
 			}
-
 			return weatherList;
 		}
 

@@ -35,7 +35,6 @@ public class WeatherController{
 
 	public void timer(){
 		Timer timer = new Timer();
-
 		long periodo = 6 * 60 * 60 * 1000;
 		TimerTask weatherTask = new TimerTask() {
 			@Override
@@ -44,7 +43,6 @@ public class WeatherController{
 				System.out.println("La función se ejecutó");
 			}
 		};
-
 		timer.schedule(weatherTask, 0, periodo);
 	}
 }
