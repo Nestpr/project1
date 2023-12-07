@@ -1,0 +1,78 @@
+package org.example;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+public class FileEventBuilder implements EventStoreBuilder{
+	private final String outputDirectory;
+
+	public FileEventBuilder(String outputDirectory) {
+		this.outputDirectory = outputDirectory;
+	}
+	public void writeEventToFile(String eventData) {
+		try {
+			String timestamp = extractTimestampFromEvent(eventData);
+			String ss = extractSSFromEvent(eventData);
+			// Create a directory path based on the timestamp
+			String directoryPath = outputDirectory + "/eventstore/prediction.Weather/" + ss;
+			String fileName = directoryPath + "/" + getYYYYMMDD(timestamp) + ".txt";
+			File directory = new File(directoryPath);
+			if (!directory.exists()) {
+				directory.mkdirs();
+			}
+			FileWriter fileWriter = new FileWriter(fileName, true);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			bufferedWriter.write(eventData + "\n");
+			bufferedWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	private String extractTimestampFromEvent(String eventData) {
+		String timestamp = null;
+
+		try {
+			// Parse eventData as JSON
+			JSONObject jsonEvent = new JSONObject(eventData);
+
+			// Extract timestamp from the JSON object
+			if (jsonEvent.has("timeInstant")) {
+				timestamp = jsonEvent.getString("timeInstant");
+			} else {
+				// Handle the case where the timestamp field is not present in eventData
+				System.err.println("timeInstant field not found in eventData");
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return timestamp;
+	}
+	private String getYYYYMMDD(String timestamp) {
+		try {
+			String date = timestamp.substring(0, 10).replace("-", "");
+			return date;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private String extractSSFromEvent(String eventData) {
+		try {
+			JSONObject jsonEvent = new JSONObject(eventData);
+			if (jsonEvent.has("ss")) {
+				return jsonEvent.getString("ss");
+			} else {
+				System.err.println("'ss' field not found in eventData");
+				return null;
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+}

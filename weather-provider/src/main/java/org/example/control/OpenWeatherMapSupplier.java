@@ -18,11 +18,6 @@ import java.util.List;
 
 public class OpenWeatherMapSupplier implements WeatherSupplier {
 	private static String weatherTemplate = "https://api.openweathermap.org/data/2.5/forecast?";
-
-	public void setWeatherTemplate(String weatherTemplate) {
-		OpenWeatherMapSupplier.weatherTemplate = weatherTemplate;
-	}
-
 	public List<Weather> getWeather(Location location, List<Instant> instantList){
 		String url = this.getUrl(location);
 		String body = null;

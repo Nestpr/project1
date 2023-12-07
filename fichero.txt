@@ -1,0 +1,1 @@
+{"predictionInstant":"2023-12-09T12:00:00Z","rain":0.28,"wind":4.24,"temperature":24.99,"humidity":55.0,"location":{"latitude":29.232734043688364,"longitude":-13.501880960490942,"island":"Caleta de Sebo"},"timeInstant":"2023-12-05T11:13:49.941504Z","ss":"OpenWeatherMapSupplier"}
