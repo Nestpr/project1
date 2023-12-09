@@ -12,21 +12,18 @@ public class WeatherController{
 	private List<Instant> timeInstant;
 	private WeatherSupplier weatherSupplier;
 	private WeatherStore weatherStore;
-
 	public WeatherController(List<Location> locations, WeatherSupplier weatherSupplier, WeatherStore weatherStore, List<Instant> timeInstant) {
 		this.locations = locations;
 		this.weatherSupplier = weatherSupplier;
 		this.weatherStore = weatherStore;
 		this.timeInstant = timeInstant;
 	}
-
 	public void execute(){
 		for (Location location : locations) {
 			List<Weather> weatherList = weatherSupplier.getWeather(location, timeInstant);
 			weatherStore.storeWeather(weatherList);
 		}
 	}
-
 	public void timer(){
 		Timer timer = new Timer();
 		long periodo = 6 * 60 * 60 * 1000;

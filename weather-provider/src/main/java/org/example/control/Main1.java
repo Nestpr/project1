@@ -5,9 +5,11 @@ import java.util.*;
 import java.io.*;
 import java.util.List;
 import static org.example.control.InstantCreator.generateInstantListAtHour;
-
 public class Main1 {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		String api = args[0];
+		String brokerURL = args[1];
+		String topicName = args[2];
 
 		List<Location> islands = new ArrayList<>();
 		islands.add(new Location(28.126116508278074, -15.447563715116386, "Las Palmas de Gran Canaria"));
@@ -19,21 +21,10 @@ public class Main1 {
 		islands.add(new Location(28.964137060031142, -13.552181103779592, "Arrecife"));
 		islands.add(new Location(29.232734043688364, -13.501880960490942, "Caleta de Sebo"));
 
-		String brokerURL = "tcp://localhost:61616";
-		String topicName = "YourTopicName";
-
 		List<Instant> instantList = generateInstantListAtHour(12, 5);
-
-		OpenWeatherMapSupplier openWeatherMapSupplier = new OpenWeatherMapSupplier();
-
+		OpenWeatherMapSupplier openWeatherMapSupplier = new OpenWeatherMapSupplier(api);
 		JmsWeatherStore jmsWeatherStore = new JmsWeatherStore(brokerURL, topicName);
-
 		WeatherController weatherController = new WeatherController(islands, openWeatherMapSupplier, jmsWeatherStore, instantList);
-
 		weatherController.timer();
-
-
 	}
-
-
 }

@@ -1,28 +1,22 @@
 package org.example.control;
-
 import com.google.gson.*;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.example.model.Weather;
-
 import javax.jms.*;
 import java.lang.reflect.Type;
 import java.time.Instant;
 import java.util.List;
 
 public class JmsWeatherStore implements WeatherStore {
-
 	private Connection connection;
 	private Session session;
 	private MessageProducer producer;
 	private String brokerURL;
 	private String destinationName;
-
-
 	public JmsWeatherStore(String brokerURL, String destinationName) {
 		this.brokerURL = brokerURL;
 		this.destinationName = destinationName;
 	}
-
 	public void storeWeather(List<Weather> weatherList) {
 		for (Weather weather : weatherList) {
 			String message = serialize(weather);
@@ -31,7 +25,6 @@ public class JmsWeatherStore implements WeatherStore {
 			close();
 		}
 	}
-
 	public String serialize(Weather weather) {
 		Gson gson = new GsonBuilder()
 				.registerTypeAdapter(Instant.class, new InstantSerializer())
@@ -58,7 +51,6 @@ public class JmsWeatherStore implements WeatherStore {
 			e.printStackTrace();
 		}
 	}
-
 	public void sendEvent(String eventData) {
 		try {
 			// Create an event message
@@ -70,7 +62,6 @@ public class JmsWeatherStore implements WeatherStore {
 			e.printStackTrace();
 		}
 	}
-
 	public void close() {
 		try {
 			if (producer != null) {
@@ -87,7 +78,6 @@ public class JmsWeatherStore implements WeatherStore {
 		}
 	}
 }
-
 class InstantSerializer implements JsonSerializer<Instant>{
 	public JsonElement serialize(Instant instant, Type type, JsonSerializationContext jsonSerializationContext){
 		return new JsonPrimitive(instant.toString());

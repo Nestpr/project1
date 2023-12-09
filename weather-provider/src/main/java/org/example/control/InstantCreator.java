@@ -4,11 +4,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-
 public class InstantCreator {
 	public static List<Instant> generateInstantListAtHour(int hour, int numberOfDays) {
 		List<Instant> instantList = new ArrayList<>();
-
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		currentDateTime = currentDateTime.withHour(hour).withMinute(0).withSecond(0);
 
@@ -17,7 +15,6 @@ public class InstantCreator {
 			instantList.add(instant);
 			currentDateTime = currentDateTime.plusDays(1);
 		}
-
 		return instantList;
 	}
 }

@@ -17,7 +17,6 @@ public class TopicSubscriber implements Subscriber{
 		this.subscriptionName = subscriptionName;
 		this.eventStoreBuilder = eventStoreBuilder;
 	}
-
 	public void start(){
 		try {
 			ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL);
@@ -45,5 +44,4 @@ public class TopicSubscriber implements Subscriber{
 			e.printStackTrace();
 		}
 	}
-
 }

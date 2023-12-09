@@ -6,7 +6,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.example.model.Location;
 import org.example.model.Weather;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -15,9 +14,12 @@ import java.io.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
 public class OpenWeatherMapSupplier implements WeatherSupplier {
 	private static String weatherTemplate = "https://api.openweathermap.org/data/2.5/forecast?";
+	private String api;
+	public OpenWeatherMapSupplier(String api) {
+		this.api = api;
+	}
 	public List<Weather> getWeather(Location location, List<Instant> instantList){
 		String url = this.getUrl(location);
 		String body = null;
@@ -38,26 +40,17 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 	public String getUrl(Location location) {
 		String longitudStr = Double.toString(location.getLongitude());
 		String latitudStr = Double.toString(location.getLatitude());
-
-		String url = weatherTemplate + "lat=" + longitudStr + "&lon=" + latitudStr + "&appid=" + System.getenv("API") + "&units=metric";
-
+		String url = weatherTemplate + "lat=" + longitudStr + "&lon=" + latitudStr + "&appid=" + api + "&units=metric";
 		return url;
 	}
 
 	public String getServerResponse(Location location, String url) throws IOException {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
-
 		HttpGet httpGet = new HttpGet(getUrl(location));
-
 		HttpResponse response = httpClient.execute(httpGet);
-
-
 		String responseBody = EntityUtils.toString(response.getEntity());
-
 		httpClient.close();
-
 		return responseBody;
-
 	}
 
 	public List<Weather> getWeatherList(Location location, List<Instant> instantList,String url, String body) throws IOException {
@@ -90,5 +83,4 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 		}
 
 	}
-
 }

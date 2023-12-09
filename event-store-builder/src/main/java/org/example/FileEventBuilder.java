@@ -5,11 +5,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
-
 public class FileEventBuilder implements EventStoreBuilder{
 	private final String outputDirectory;
-
 	public FileEventBuilder(String outputDirectory) {
 		this.outputDirectory = outputDirectory;
 	}
@@ -34,22 +31,16 @@ public class FileEventBuilder implements EventStoreBuilder{
 	}
 	private String extractTimestampFromEvent(String eventData) {
 		String timestamp = null;
-
 		try {
-			// Parse eventData as JSON
 			JSONObject jsonEvent = new JSONObject(eventData);
-
-			// Extract timestamp from the JSON object
 			if (jsonEvent.has("timeInstant")) {
 				timestamp = jsonEvent.getString("timeInstant");
 			} else {
-				// Handle the case where the timestamp field is not present in eventData
 				System.err.println("timeInstant field not found in eventData");
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
 		return timestamp;
 	}
 	private String getYYYYMMDD(String timestamp) {
@@ -60,7 +51,6 @@ public class FileEventBuilder implements EventStoreBuilder{
 			throw new RuntimeException(e);
 		}
 	}
-
 	private String extractSSFromEvent(String eventData) {
 		try {
 			JSONObject jsonEvent = new JSONObject(eventData);
