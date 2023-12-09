@@ -4,100 +4,94 @@ output:
   html_document: default
 ---
 
-# Práctica 1: Captura de datos a partir de fuentes externas.
+# Práctice 2: Incorporation of data into the system architecture.
 
-### Nombre: Néstor Ortega Pérez
-### Asignatura: Desarrollo de Aplicaciones para Ciencia de Datos
-### Curso: 2º
-### Universidad: ULPGC
-### Titulación: Ciencia e Ingeniería de Datos
+### Name: Néstor Ortega Pérez
+### Subject: Desarrollo de Aplicaciones para Ciencia de Datos
+### Course: 2º
+### University: ULPGC
+### Degree: Ciencia e Ingeniería de Datos
 ### Escuela de Ingeniería Informática
 
 ---
 
-Esta aplicación realiza consultas a la API OpenWeatherMap cada 6 horas para obtener la predicción meteorológica de las 8 islas para los próximos 5 días a las 12pm de cada día. Posteriormente, los datos se almacenan en una base de datos SQLite, con una tabla para cada isla y una entrada para cada día. Se registran la temperatura, probabilidad de precipitaciones, humedad, nubes y velocidad del viento.
+This weather prediction system consists of three main components: the Prediction Provider, the Broker (using ActiveMQ), and the Event Store Builder.
+
+The Prediction Provider acquires meteorological data from the 8 Canary Islands, generates events in JSON format with detailed information, and sends them to the Broker through the prediction.Weather topic.
+
+The Broker, implemented using ActiveMQ, serves as an intermediary for communication between components. It receives meteorological events from the Prediction Provider and publishes them on the prediction.Weather topic, allowing other modules to subscribe and consume this information.
+
+The Event Store Builder, subscribed to the prediction.Weather topic, is responsible for temporarily storing these events in an organized directory structure. 
 
 ---
 
-## Recursos Utilizados
+## Resources Used
 
-### Entorno de Desarrollo
+### Development Environment
 
-- **IntelliJ IDEA:** Este proyecto se desarrolla utilizando IntelliJ IDEA como entorno de desarrollo integrado y en lenguaje Java. Se recomienda descargar e instalar la última versión de IntelliJ para una experiencia de desarrollo óptima.
+- **IntelliJ IDEA:** This project is developed using IntelliJ IDEA as the integrated development environment, and it is written in the Java language. It is recommended to download and install the latest version of IntelliJ for an optimal development experience.
 
-### Control de Versiones
+### Version Control
 
-- **Git:** Se utilizó Git como sistema de control de versiones. Para ello, es necesario asegurarse de tener Git instalado localmente. Puede descargar Git [aquí](https://git-scm.com/).
+- **Git:** Git was used as the version control system. Make sure to have Git installed locally. You can download Git [here](https://git-scm.com/).
 
-### Construcción y Gestión de Dependencias
+### Build and Dependency Management
 
-- **Apache Maven:** Este proyecto utiliza Maven para la gestión de dependencias y construcción. Asegúrese de tener Maven instalado. Puede descargar Maven [aquí](https://maven.apache.org/).
-
-## Inicio Rápido
-
-1. Clona el repositorio:
-    ```bash
-    git clone https://github.com/usuario/nombre-del-proyecto.git
-    ```
-
-2. Abre el proyecto en IntelliJ IDEA.
-
-3. Construye el proyecto utilizando Maven:
-    ```bash
-    mvn clean install
-    ```
-
-4. Ejecuta la aplicación desde IntelliJ o mediante el comando Maven:
-    ```bash
-    mvn spring-boot:run
-    ```
+- **Apache Maven:** This project utilizes Maven for dependency management and build processes. Ensure that Maven is installed. You can download Maven [here](https://maven.apache.org/).
    
-## Otras implementaciones a tener en cuenta.
+## Other Implementations to Consider
 
-- Como tanto la `API Key` como el `path JDBC` deben ser privados y no pueden ser vistos por cualquiera, estos deben ser utilizados como variables de entorno dentro del propio proyecto IntelliJ.
+On the weather-provider module you will need to introduce the api, brokerUrl and topicName. And on the event store builder module you will ned to put outputDirectory, brokerURL, topicName, clientId and a subscriptionName. This variables will be used as arguments by the main method. 
 
-- Antes de ejecutar la aplicación, asegúrate de configurar estas variables de entorno en tu entorno de desarrollo.
+The steps to be executed are as follows:
 
-    1. Accede a este icono que se encuentra en la parte superior derecha:
-    
-        ![Icono](Captura de pantalla 2023-11-17 a las 22.59.15.png)
+1- Go to More Actions on the Main Class
 
-    2. Escoge "Edit":
-    
-        ![Edit](Captura de pantalla 2023-11-17 a las 18.59.21.png)
+![Captura de pantalla 2023-12-08 a las 23 55 20](https://github.com/Nestpr/project1/assets/145444799/d0db1850-0852-4ca1-941e-b5e7428328d5)
+![Captura de pantalla 2023-12-08 a las 23 55 21](https://github.com/Nestpr/project1/assets/145444799/77b029cd-65de-464a-a779-44de7a893302)
 
-    3. Añade las variables en "Enviroment variables" y nombralas `API` y `path`:
-    
-        ![Variables de entorno](Captura de pantalla 2023-11-17 a las 18.59.30.png)
-        ![Variables de entorno](Captura de pantalla 2023-11-18 a las 11.05.35.png)
+2- Select Edit
 
-## Cómo ejecutar el programa.
+3- Put the arguments with a separation between each value.
 
-1. Situarse en el módulo `Main`.
+![Captura de pantalla 2023-12-08 a las 23 55 49](https://github.com/Nestpr/project1/assets/145444799/04aeecf0-1c7b-4e96-90b1-bf1dce6fbd96)
 
-2. Escoger los días y la hora a la que queremos hacer la previsión en el método `generateInstantListAtHour`:
+  
+## How to Run the Program
 
-    ![Días y hora](Captura de pantalla 2023-11-17 a las 19.11.57.png)
+1. Navigate to the Main class of the weather-provider module.
 
-3. Ejecutar el programa:
+2. Choose the days and the time for the forecast in the generateInstantListAtHour method:
 
-    ![Ejecutar](Captura de pantalla 2023-11-17 a las 23.41.49.png)
+![Captura de pantalla 2023-11-17 a las 19 11 57](https://github.com/Nestpr/project1/assets/145444799/d38d80dd-a04f-4523-a5de-ccca0a085fc1)
 
-# Arquitectura utilizada: Modelo-Control
+3. Execute the Main class:
 
-Este proyecto sigue el principio de diseño Modelo-Control, una variante del patrón de diseño Modelo-Vista-Controlador (MVC). El Modelo-Control se centra en la separación de responsabilidades entre el modelo de datos y el controlador, aunque en este caso no se cuenta con una interfaz de usuario.
+![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
 
-### Descripción del Principio
+4. Navigate to the Main class of the event store builder module.
 
-El Diseño Modelo-Control se basa en la división de la aplicación en dos componentes principales:
+5. Execute the Main class:
 
-1. **Modelo:**
-   Se definen las clases que representan la estructura de los datos obtenidos de la API. Estas clases reflejan los diferentes tipos de datos que maneja la aplicación.
+![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
 
-2. **Controlador:**
-   Encapsula la lógica para interactuar con la API. Además, proporciona métodos para realizar solicitudes a la API y recuperar datos. Asimismo, maneja la conexión y las operaciones con la base de datos SQLite, ofreciendo métodos para almacenar datos en la base de datos. Por último, el `WeatherController` actúa como el controlador principal, coordinando las operaciones entre el `WeatherSupplier` y el `WeatherStore`. Es responsable de recibir los datos de la API a través del `WeatherSupplier` y luego almacenarlos en la base de datos a través del `WeatherStore`.
+6. To stop the program's execution, simply stop running the program.
 
-## Diagrama de Clases
 
-![Diagrama de Clases](Captura de pantalla 2023-11-17 a las 23.38.16.png)
+# Used Architecture: Model-Control
+
+This project follows the Model-Control design principle, a variant of the Model-View-Controller (MVC) design pattern. The Model-Control focuses on the separation of responsibilities between the data model and the controller, although in this case, there is no user interface.
+
+### Principle Description
+
+The Model-Control Design is based on dividing the application into two main components:
+
+1. **Model:**
+   Classes defining the structure of the data obtained from the API. These classes reflect the different data types handled by the application.
+2. **Controller:**
+   The controller is responsible for receiving user inputs, processing them, and taking appropriate actions.
+## Class Diagram
+
+![Diagrama de Clases]
+
 
