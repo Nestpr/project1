@@ -38,13 +38,17 @@ The Event Store Builder, subscribed to the prediction.Weather topic, is responsi
 ### Build and Dependency Management
 
 - **Apache Maven:** This project utilizes Maven for dependency management and build processes. Ensure that Maven is installed. You can download Maven [here](https://maven.apache.org/).
+
+### Message Broker and Communication
+
+- **ActiveMQ:** is an open-source message broker that provides a reliable, scalable, and asynchronous communication platform. It is often used to implement messaging patterns in distributed systems. You can download ActiveMQ [here](https://activemq.apache.org/download.html).
    
 ## Other Implementations to Consider
 
-On the weather-provider module you will need to introduce the api, brokerUrl and topicName. And on the event store builder module you will ned to put outputDirectory, brokerURL, topicName, clientId and a subscriptionName. This variables will be used as arguments by the main method. 
+On the weather-provider module you will need to introduce the api, brokerUrl and topicName. And on the event store builder module you will ned to put outputDirectory, brokerURL, topicName, clientId and a subscriptionName, all of them in the same order. This variables will be used as arguments by the main method. 
 
 The steps to be executed are as follows:
-
+  
 1- Go to More Actions on the Main Class
 
 ![Captura de pantalla 2023-12-08 a las 23 55 20](https://github.com/Nestpr/project1/assets/145444799/d0db1850-0852-4ca1-941e-b5e7428328d5)
@@ -54,10 +58,31 @@ The steps to be executed are as follows:
 
 3- Put the arguments with a separation between each value.
 
-![Captura de pantalla 2023-12-08 a las 23 55 49](https://github.com/Nestpr/project1/assets/145444799/04aeecf0-1c7b-4e96-90b1-bf1dce6fbd96)
+![Captura de pantalla 2023-12-08 a las 23 55 49](https://github.com/Nestpr/project1/assets/145444799/c1768017-e0e7-4197-b004-ff440a8a0338)
 
   
 ## How to Run the Program
+
+1- Start ActiveMQ on the terminal following these steps:
+
+1.a - Navigate to the ActiveMQ Installation Directory and use this command to start it:
+
+-On Mac/Unix based systems
+
+   ```bash
+   cd /path/to/activemq
+   ```
+  ```bash
+   ./bin/activemq console
+   ```
+-On Windows
+   ```bash
+   cd C:\path\to\activemq
+   ```
+  ```bash
+   bin\activemq.bat console
+   ```
+To shut down both process you need to press control + C on the terminal.
 
 1. Navigate to the Main class of the weather-provider module.
 
@@ -75,7 +100,7 @@ The steps to be executed are as follows:
 
 ![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
 
-6. To stop the program's execution, simply stop running the program.
+6. To stop the program's execution, simply stop running the Main clasess of both modules.
 
 
 # Used Architecture: Model-Control
@@ -91,7 +116,8 @@ The Model-Control Design is based on dividing the application into two main comp
 2. **Controller:**
    The controller is responsible for receiving user inputs, processing them, and taking appropriate actions.
 ## Class Diagram
+![Captura de pantalla 2023-12-09 a las 13 12 42](https://github.com/Nestpr/project1/assets/145444799/b6bbf4b7-3bf4-41f2-9927-da09f262bf4f)
+![Captura de pantalla 2023-12-09 a las 13 30 10](https://github.com/Nestpr/project1/assets/145444799/a66295d5-2b3e-48f1-b15c-951a02cd0c39)
 
-![Diagrama de Clases]
 
 
