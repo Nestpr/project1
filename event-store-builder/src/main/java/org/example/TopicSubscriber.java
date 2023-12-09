@@ -9,7 +9,6 @@ public class TopicSubscriber implements Subscriber{
 	private final String clientId;
 	private final String subscriptionName;
 	private final EventStoreBuilder eventStoreBuilder;
-
 	public TopicSubscriber(String brokerURL, String topicName, String clientId, String subscriptionName, EventStoreBuilder eventStoreBuilder) {
 		this.brokerURL = brokerURL;
 		this.topicName = topicName;
