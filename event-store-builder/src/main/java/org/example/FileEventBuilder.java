@@ -16,7 +16,7 @@ public class FileEventBuilder implements EventStoreBuilder{
 			String ss = extractSSFromEvent(eventData);
 			// Create a directory path based on the timestamp
 			String directoryPath = outputDirectory + "/eventstore/prediction.Weather/" + ss;
-			String fileName = directoryPath + "/" + getYYYYMMDD(timestamp) + ".txt";
+			String fileName = directoryPath + "/" + getYYYYMMDD(timestamp) + ".events";
 			File directory = new File(directoryPath);
 			if (!directory.exists()) {
 				directory.mkdirs();
