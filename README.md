@@ -119,5 +119,73 @@ The Model-Control Design is based on dividing the application into two main comp
 ![Captura de pantalla 2023-12-09 a las 13 12 42](https://github.com/Nestpr/project1/assets/145444799/b6bbf4b7-3bf4-41f2-9927-da09f262bf4f)
 ![Captura de pantalla 2023-12-09 a las 13 30 10](https://github.com/Nestpr/project1/assets/145444799/a66295d5-2b3e-48f1-b15c-951a02cd0c39)
 
+## How to ejecute the .Jar files
 
+1. Activate ActiveMQ on the terminal:
 
+   1.a - Navigate to the ActiveMQ Installation Directory and use this command to start it in the background:
+
+-On Mac/Unix based systems
+
+   ```bash
+   cd /path/to/activemq
+   ```
+  ```bash
+   ./bin/activemq start
+   ```
+-On Windows
+   ```bash
+   cd C:\path\to\activemq
+   ```
+  ```bash
+   bin\activemq.bat start
+   ```
+Just change start for stop to finish the ActiveMQ execution.
+
+2. Execute Weather provider Jar on the terminal:
+
+   1.a - Navigate to the Weather Provider jar Directory and use this command to start it in the background:
+   1.b - It is necessary to place the arguments in the order shown and append an '&' at the end for it to run in the background.
+   
+-On Mac/Unix based systems
+
+   ```bash
+   cd /path/to/weather-provider.jar
+   ```
+  ```bash
+   java -jar weather-provider-1.0-SNAPSHOT.jar API brokerUrl YourTopicName &
+   ```
+-On Windows
+   ```bash
+   cd C:\path\to\weather-provider.jar
+   ```
+  ```bash
+   java -jar weather-provider-1.0-SNAPSHOT.jar API brokerUrl YourTopicName &
+   ```
+
+3. Execute Event Store Builder Jar on the terminal:
+
+   1.a - Navigate to the Event Store Builder Jar Directory and use this command to start it in the background:
+   1.b - It is necessary to place the arguments in the order shown.
+   
+-On Mac/Unix based systems
+
+   ```bash
+   cd /path/to/event-store-builder.jar
+   ```
+  ```bash
+   java -jar event-store-builder-1.0-SNAPSHOT.jar outputDirectory brokerUrl YourTopicName YourClientId YourSubscriptionName
+   ```
+-On Windows
+   ```bash
+   cd C:\path\to\event-store-builder.jar
+   ```
+  ```bash
+   java -jar event-store-builder-1.0-SNAPSHOT.jar outputDirectory brokerUrl YourTopicName YourClientId YourSubscriptionName
+   ```
+4. Finish both process using pkill -f.
+   ```bash
+   pkill -f "java -jar weather-provider-1.0-SNAPSHOT.jar"
+   pkill -f "java -jar event-store-builder-1.0-SNAPSHOT.jar"
+   ```
+   
