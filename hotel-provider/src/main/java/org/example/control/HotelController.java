@@ -1,7 +1,6 @@
 package org.example.control;
 import org.example.model.Hotel;
 import org.example.model.HotelKey;
-import org.example.
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;

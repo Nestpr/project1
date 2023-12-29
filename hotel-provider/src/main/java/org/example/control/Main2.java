@@ -3,8 +3,11 @@ import org.example.model.HotelKey;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import static org.example.control.InstantCreator.generateInstantListAtHour;
 
 public class Main2 {
 	public static void main(String[] args) throws IOException {
@@ -40,14 +43,14 @@ public class Main2 {
 		hotelKeys.add(new HotelKey("La Concha Boutique Apartments", "g1902255-d12913351", "Arrecife"));
 		hotelKeys.add(new HotelKey("Apartaments Islamar Arrecife", "g187478-d1989764", "Arrecife"));
 
-
-		HotelKeyResolver hotelKeyResolver = new HotelKeyResolver(correctDate);
+		List<Instant> instantList = generateInstantListAtHour(12, 5);
+		Instant instant = instantList.get(4);
+		LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String date = localDate.format(formatter);
+		HotelKeyResolver hotelKeyResolver = new HotelKeyResolver(date);
 		JmsHotelStore jmsHotelStore = new JmsHotelStore(brokerURL, topicName);
-		HotelController hotelController = new HotelController(hotelKeys, correctDate, hotelKeyResolver, jmsHotelStore);
+		HotelController hotelController = new HotelController(hotelKeys, date, hotelKeyResolver, jmsHotelStore);
 		hotelController.timer();
 	}
-	private static boolean isDateWithinRange(LocalDate date, LocalDate startDate, LocalDate endDate) {
-		return !date.isBefore(startDate) && !date.isAfter(endDate);
-	}
-
 }

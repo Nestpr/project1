@@ -34,7 +34,7 @@ public class TopicSubscriber {
 					if (message instanceof TextMessage) {
 						TextMessage textMessage = (TextMessage) message;
 						String eventData = textMessage.getText();
-						System.out.println("Received event: " + eventData);
+						//System.out.println("Received event: " + eventData);
 						this.travelRecommendationBuilder.recommendation(eventData);
 						message.acknowledge();
 					}
