@@ -14,8 +14,7 @@ public class FileEventBuilder implements EventStoreBuilder{
 		try {
 			String timestamp = extractTimestampFromEvent(eventData);
 			String ss = extractSSFromEvent(eventData);
-			// Create a directory path based on the timestamp
-			String directoryPath = outputDirectory + "/eventstore/prediction.Weather/" + ss;
+			String directoryPath = outputDirectory + "/eventstore/datalake/" + ss;
 			String fileName = directoryPath + "/" + getYYYYMMDD(timestamp) + ".events";
 			File directory = new File(directoryPath);
 			if (!directory.exists()) {
@@ -33,8 +32,8 @@ public class FileEventBuilder implements EventStoreBuilder{
 		String timestamp = null;
 		try {
 			JSONObject jsonEvent = new JSONObject(eventData);
-			if (jsonEvent.has("timeInstant")) {
-				timestamp = jsonEvent.getString("timeInstant");
+			if (jsonEvent.has("ts")) {
+				timestamp = jsonEvent.getString("ts");
 			} else {
 				System.err.println("timeInstant field not found in eventData");
 			}

@@ -11,6 +11,8 @@
     <modules>
         <module>weather-provider</module>
         <module>event-store-builder</module>
+        <module>hotel-provider</module>
+        <module>business-unit</module>
     </modules>
 
     <properties>

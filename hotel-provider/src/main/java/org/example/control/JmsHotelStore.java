@@ -1,35 +1,37 @@
 package org.example.control;
 import com.google.gson.*;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.example.model.Weather;
+import org.example.model.Hotel;
 import javax.jms.*;
 import java.lang.reflect.Type;
 import java.time.Instant;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.List;
 
-public class JmsWeatherStore implements WeatherStore {
+public class JmsHotelStore implements HotelStore{
 	private Connection connection;
 	private Session session;
 	private MessageProducer producer;
 	private String brokerURL;
 	private String destinationName;
-	public JmsWeatherStore(String brokerURL, String destinationName) {
+	public JmsHotelStore(String brokerURL, String destinationName) {
 		this.brokerURL = brokerURL;
 		this.destinationName = destinationName;
 	}
-	public void storeWeather(List<Weather> weatherList) {
-		for (Weather weather : weatherList) {
-			String message = serialize(weather);
+	public void storeHotel(List<Hotel> hotels) {
+		for (Hotel hotel : hotels) {
+			String message = serialize(hotel);
 			eventProducer();
 			sendEvent(message);
 			close();
 		}
 	}
-	public String serialize(Weather weather) {
+	public String serialize(Hotel hotel) {
 		Gson gson = new GsonBuilder()
 				.registerTypeAdapter(Instant.class, new InstantSerializer())
 				.create();
-		return gson.toJson(weather);
+		return gson.toJson(hotel);
 	}
 
 	public void eventProducer(){
@@ -68,8 +70,8 @@ public class JmsWeatherStore implements WeatherStore {
 		}
 	}
 }
-class InstantSerializer implements JsonSerializer<Instant>{
-	public JsonElement serialize(Instant instant, Type type, JsonSerializationContext jsonSerializationContext){
+class InstantSerializer implements JsonSerializer<Instant> {
+	public JsonElement serialize(Instant instant, Type type, JsonSerializationContext jsonSerializationContext) {
 		return new JsonPrimitive(instant.toString());
 	}
 }

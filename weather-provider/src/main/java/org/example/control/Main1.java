@@ -2,7 +2,6 @@ package org.example.control;
 import org.example.model.Location;
 import java.time.Instant;
 import java.util.*;
-import java.io.*;
 import java.util.List;
 import static org.example.control.InstantCreator.generateInstantListAtHour;
 public class Main1 {
