@@ -4,7 +4,7 @@ output:
   html_document: default
 ---
 
-# Práctice 2: Incorporation of data into the system architecture.
+# Final Practice: Hotel recommendations for an island based on its climate.
 
 ### Name: Néstor Ortega Pérez
 ### Subject: Desarrollo de Aplicaciones para Ciencia de Datos
@@ -14,14 +14,20 @@ output:
 ### Escuela de Ingeniería Informática
 
 ---
+This application is presented as a utilitarian tool designed to assist users in choosing accommodations in the Canary Islands, based on weather forecasts for the number of days they choose (Maximum: 5 days). The application calculates the island with the best weather forecast and recommends 5 of its top-rated hotels according to TripAdvisor, along with the dates when their prices are the cheapest, average, and most expensive. This enables the user to book a hotel based on their daily costs.
 
-This weather prediction system consists of three main components: the Prediction Provider, the Broker (using ActiveMQ), and the Event Store Builder.
+This system consists of five main components: the Prediction Provider, the Hotel Provider, the Broker (using ActiveMQ), and the Event Store Builder(Data Lake) and the Business-Unit.
 
-The Prediction Provider acquires meteorological data from the 8 Canary Islands, generates events in JSON format with detailed information, and sends them to the Broker through the prediction.Weather topic.
+The Prediction Provider acquires every 6 hours meteorological data from the 8 Canary Islands, generates events in JSON format with detailed information, and sends them to the Broker through the topic.
 
-The Broker, implemented using ActiveMQ, serves as an intermediary for communication between components. It receives meteorological events from the Prediction Provider and publishes them on the prediction.Weather topic, allowing other modules to subscribe and consume this information.
+The Hotel Provider acquires every 6 hours the data from the five best hotels of each island along with the dates when their prices are the cheapest, average, and most expensive. It generates events in JSON format with detailed information, and sends them to the Broker through the topic.
 
-The Event Store Builder, subscribed to the prediction.Weather topic, is responsible for temporarily storing these events in an organized directory structure. 
+The Broker, implemented using ActiveMQ, serves as an intermediary for communication between components. It receives meteorological and hotel events from the Prediction and Hotel Providers and publishes them on the topic, allowing other modules to subscribe and consume this information.
+
+The Event Store Builder(Data Lake), subscribed to the topic, is responsible for storing these events in an organized directory structure. 
+
+The Business Unit, suscribed to the topic, takes the data from the Prediction and Hotel providers and calculates the island with the best climate for the prediction, creates a data base (SQlite) with the best five hotels of the island with the best climate and the dates when their prices are the cheapest, average, and most expensive. This is the final data that is going to be consumed by the client.
+
 
 ---
 
@@ -45,7 +51,9 @@ The Event Store Builder, subscribed to the prediction.Weather topic, is responsi
    
 ## Other Implementations to Consider
 
-On the weather-provider module you will need to introduce the api, brokerUrl and topicName. And on the event store builder module you will ned to put outputDirectory, brokerURL, topicName, clientId and a subscriptionName, all of them in the same order. This variables will be used as arguments by the main method. 
+Due to the API used to obtain hotel information not providing accurate dates for hotels located on La Graciosa island, that location has been changed to another area on Gran Canaria island (Maspalomas).
+
+On the weather-provider module you will need to introduce the api, brokerUrl and topicName. On the hotel-provider module you will need to introduce brokerUrl and topicName. On the business unit module you will ned to put outputDirectory, brokerURL, topicName, clientId, subscriptionName and the Jdbc url to specify the location of the database. And on the event store builder module you will ned to put outputDirectory, brokerURL, topicName, clientId and a subscriptionName, all of them in the same order. This variables will be used as arguments by the main method. 
 
 The steps to be executed are as follows:
   
@@ -84,24 +92,35 @@ The steps to be executed are as follows:
    ```
 To shut down both process you need to press control + C on the terminal.
 
-1. Navigate to the Main class of the weather-provider module.
+**Very Important**
 
-2. Choose the days and the time for the forecast in the generateInstantListAtHour method:
+It is necessary to run the modules in the order listed in the following explanation for the proper functioning of the application.
 
-![Captura de pantalla 2023-11-17 a las 19 11 57](https://github.com/Nestpr/project1/assets/145444799/d38d80dd-a04f-4523-a5de-ccca0a085fc1)
+1. Navigate to the Main class of the business unit(island-hotel-recommendation) module.
 
-3. Execute the Main class:
-
-![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
-
-4. Navigate to the Main class of the event store builder module.
-
-5. Execute the Main class:
+2. Execute the Main class:
 
 ![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
 
-6. To stop the program's execution, simply stop running the Main clasess of both modules.
+4. Navigate to the Main class of the weather provider module:
 
+5. Write the days for the forecast(Maximum 5).
+
+![Captura de pantalla 2024-01-03 a las 23 51 06](https://github.com/Nestpr/project1/assets/145444799/041b900e-97aa-4da6-8ec1-6b10d014e73c)
+
+6. Navigate to the Main class of the hotel provider module.
+
+7. Write again the days for the forecast(Maximum 5) **It is important to enter the same number as in the weather provider to avoid errors**
+
+![Captura de pantalla 2024-01-03 a las 23 51 21](https://github.com/Nestpr/project1/assets/145444799/d3a689e3-5ce5-4dcb-8c0e-4d6c2d645f43)
+
+8. Execute the Main class:
+
+![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
+
+9. After the execution of all the modules, a SQlite data base will be on the JDBC Url that you put on the arguments, you can check the final data there.
+
+10. To stop the program's execution, simply stop running the Main clasess of both modules.
 
 # Used Architecture: Model-Control
 
@@ -115,6 +134,7 @@ The Model-Control Design is based on dividing the application into two main comp
    Classes defining the structure of the data obtained from the API. These classes reflect the different data types handled by the application.
 2. **Controller:**
    The controller is responsible for receiving user inputs, processing them, and taking appropriate actions.
+
 ## Class Diagram
 ![Captura de pantalla 2023-12-09 a las 13 12 42](https://github.com/Nestpr/project1/assets/145444799/b6bbf4b7-3bf4-41f2-9927-da09f262bf4f)
 ![Captura de pantalla 2023-12-09 a las 13 30 10](https://github.com/Nestpr/project1/assets/145444799/a66295d5-2b3e-48f1-b15c-951a02cd0c39)
