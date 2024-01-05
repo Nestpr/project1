@@ -13,9 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 public class TravelRecommendationBuilder implements Recommendation {
-	private Map<String, Double> sumasTemperaturasPorIsla = new HashMap<>();
-	private List<String> hoteles = new ArrayList<>();
-	private String islaConSumaMasAlta;
+	private Map<String, Double> temperaturesPerIsland = new HashMap<>();
+	private List<String> hotels = new ArrayList<>();
+	private String bestIsland;
+	private static String jdbcUrl;
+
+	public TravelRecommendationBuilder(String jdbcUrl) {
+		this.jdbcUrl = jdbcUrl;
+	}
 
 	public void recommendation(String event){
 		temperatureCollector(event);
@@ -23,30 +28,28 @@ public class TravelRecommendationBuilder implements Recommendation {
 
 	}
 	private void processRecommendation() {
-		double sumaTemperaturasMasAlta = Double.MIN_VALUE;
-
-		for (Map.Entry<String, Double> entry : sumasTemperaturasPorIsla.entrySet()) {
-			String isla = entry.getKey();
-			double sumaActual = entry.getValue();
-			if (sumaActual > sumaTemperaturasMasAlta) {
-				sumaTemperaturasMasAlta = sumaActual;
-				islaConSumaMasAlta = isla;
+		double highestAddTemperature = Double.MIN_VALUE;
+		for (Map.Entry<String, Double> entry : temperaturesPerIsland.entrySet()) {
+			String island = entry.getKey();
+			double actualAdd = entry.getValue();
+			if (actualAdd > highestAddTemperature) {
+				highestAddTemperature = actualAdd;
+				bestIsland = island;
 			}
 		}
-
-		if (hoteles.size() < 21){
+		if (hotels.size() < 40){
 		}
 		else {
-			for (String hotel : hoteles) {
+			for (String hotel : hotels) {
 				try {
 					ObjectMapper objectMapper = new ObjectMapper();
 					JsonNode jsonNode = objectMapper.readTree(hotel);
-					String islaEvento = jsonNode.path("hotelKey").path("island").asText();
-					String island = jsonNode.toString();
-					if (islaConSumaMasAlta.equals(islaEvento)) {
-						System.out.println(islaEvento);
-						System.out.println(island);
-						guardarEvento(island);
+					String islandEvent = jsonNode.path("hotelKey").path("island").asText();
+					String event = jsonNode.toString();
+					if (bestIsland.equals(islandEvent)) {
+						System.out.println(islandEvent);
+						System.out.println(event);
+						saveEvent(event);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,11 +64,11 @@ public class TravelRecommendationBuilder implements Recommendation {
 			String ssValue = jsonNode.path("ss").asText();
 
 			if ("OpenWeatherMapSupplier".equals(ssValue)) {
-				double temperatura = jsonNode.path("temperature").asDouble();
-				String isla = jsonNode.path("location").path("island").asText();
-				sumarTemperaturaPorIsla(isla, temperatura);
+				double temperature = jsonNode.path("temperature").asDouble();
+				String island = jsonNode.path("location").path("island").asText();
+				addIslandTemperature(island, temperature);
 			} else if ("Xotelo".equals(ssValue)) {
-				hoteles.add(event);
+				hotels.add(event);
 			} else {
 				System.out.println("Evento no reconocido: " + ssValue);
 			}
@@ -73,14 +76,14 @@ public class TravelRecommendationBuilder implements Recommendation {
 			e.printStackTrace();
 		}
 	}
-	private void sumarTemperaturaPorIsla(String isla, double temperatura) {
-		sumasTemperaturasPorIsla.put(isla, sumasTemperaturasPorIsla.getOrDefault(isla, 0.0) + temperatura);
+	private void addIslandTemperature(String island, double temperature) {
+		temperaturesPerIsland.put(island, temperaturesPerIsland.getOrDefault(island, 0.0) + temperature);
 	}
-	public static void guardarEvento(String jsonEvento) {
+	public static void saveEvent(String jsonEvent) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode rootNode = null;
 		try {
-			rootNode = objectMapper.readTree(jsonEvento);
+			rootNode = objectMapper.readTree(jsonEvent);
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
@@ -88,14 +91,12 @@ public class TravelRecommendationBuilder implements Recommendation {
 		String hotelKey = rootNode.at("/hotelKey/key").asText();
 		String island = rootNode.at("/hotelKey/island").asText();
 		String checkOutDate = rootNode.at("/checkOutDate").asText();
-		List<String> averagePriceDays = parsearLista(rootNode.at("/averagePriceDays"));
-		List<String> cheapPriceDays = parsearLista(rootNode.at("/cheapPriceDays"));
-		List<String> highPriceDays = parsearLista(rootNode.at("/highPriceDays"));
+		List<String> averagePriceDays = parseList(rootNode.at("/averagePriceDays"));
+		List<String> cheapPriceDays = parseList(rootNode.at("/cheapPriceDays"));
+		List<String> highPriceDays = parseList(rootNode.at("/highPriceDays"));
 		String ts = rootNode.at("/ts").asText();
 		String ss = rootNode.at("/ss").asText();
-
-		// Conectar a la base de datos SQLite
-		try (Connection connection = DriverManager.getConnection("jdbc:sqlite:hotel_db.db")) {
+		try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
 
 			String createTableSQL = "CREATE TABLE IF NOT EXISTS eventos "
 					+ "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -121,7 +122,6 @@ public class TravelRecommendationBuilder implements Recommendation {
 				insertEventStatement.setString(7, highPriceDays.toString());
 				insertEventStatement.setString(8, ts);
 				insertEventStatement.setString(9, ss);
-
 				insertEventStatement.executeUpdate();
 			}
 
@@ -130,12 +130,12 @@ public class TravelRecommendationBuilder implements Recommendation {
 			e.printStackTrace();
 		}
 	}
-	private static List<String> parsearLista(JsonNode node) {
-		List<String> lista = new ArrayList<>();
+	private static List<String> parseList(JsonNode node) {
+		List<String> list = new ArrayList<>();
 		if (node.isArray()) {
-			node.forEach(item -> lista.add(item.asText()));
+			node.forEach(item -> list.add(item.asText()));
 		}
-		return lista;
+		return list;
 	}
 
 }

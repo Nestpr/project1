@@ -1,8 +1,10 @@
 package org.example.control;
 import org.example.model.Location;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 import static org.example.control.InstantCreator.generateInstantListAtHour;
 public class Main1 {
 	public static void main(String[] args) {
@@ -18,9 +20,29 @@ public class Main1 {
 		islands.add(new Location(27.807865590311415, -17.908997952200863, "Villa de Valverde"));
 		islands.add(new Location(28.516900861745228, -13.859043734802182, "Puerto del Rosario"));
 		islands.add(new Location(28.964137060031142, -13.552181103779592, "Arrecife"));
-		islands.add(new Location(29.232734043688364, -13.501880960490942, "Caleta de Sebo"));
+		//islands.add(new Location(29.232734043688364, -13.501880960490942, "Caleta de Sebo"));
+		islands.add(new Location(27.75802155994051, -15.580228757742239, "Maspalomas"));
 
-		List<Instant> instantList = generateInstantListAtHour(12, 5);
+		Scanner scanner = new Scanner(System.in);
+		int sharedNumber;
+		while (true) {
+			System.out.print("Ingrese el número de días (Máximo 5): ");
+
+			while (!scanner.hasNextInt()) {
+				System.out.print("Por favor, ingrese un número válido: ");
+				scanner.next();
+			}
+
+			int number = scanner.nextInt();
+
+			if (number >= 1 && number <= 5) {
+				sharedNumber = number;
+				break;
+			} else {
+				System.out.println("Por favor, ingrese un número entre 1 y 5.");
+			}
+		}
+		List<Instant> instantList = generateInstantListAtHour(12, sharedNumber);
 		OpenWeatherMapSupplier openWeatherMapSupplier = new OpenWeatherMapSupplier(api);
 		JmsWeatherStore jmsWeatherStore = new JmsWeatherStore(brokerURL, topicName);
 		WeatherController weatherController = new WeatherController(islands, openWeatherMapSupplier, jmsWeatherStore, instantList);
