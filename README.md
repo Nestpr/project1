@@ -53,7 +53,7 @@ The Business Unit, suscribed to the topic, takes the data from the Prediction an
 
 Due to the API used to obtain hotel information not providing accurate dates for hotels located on La Graciosa island, that location has been changed to another area on Gran Canaria island (Maspalomas).
 
-On the weather-provider module you will need to introduce the api, brokerUrl and topicName. On the hotel-provider module you will need to introduce brokerUrl and topicName. On the business unit module you will ned to put outputDirectory, brokerURL, topicName, clientId, subscriptionName and the Jdbc url to specify the location of the database. And on the event store builder module you will ned to put outputDirectory, brokerURL, topicName, clientId and a subscriptionName, all of them in the same order. This variables will be used as arguments by the main method. 
+On the weather-provider module you will need to introduce the api, brokerUrl and topicName. On the hotel-provider module you will need to introduce brokerUrl and topicName. On the business unit module you will ned to put brokerURL, topicName, clientId, subscriptionName and the Jdbc url to specify the location of the database. And on the event store builder module you will ned to put outputDirectory, brokerURL, topicName, clientId and a subscriptionName, all of them in the same order. This variables will be used as arguments by the main method. 
 
 The steps to be executed are as follows:
   
@@ -102,25 +102,36 @@ It is necessary to run the modules in the order listed in the following explanat
 
 ![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
 
-4. Navigate to the Main class of the weather provider module:
+3. Navigate to the Main class of the event store builder module.
 
-5. Write the days for the forecast(Maximum 5).
-
-![Captura de pantalla 2024-01-03 a las 23 51 06](https://github.com/Nestpr/project1/assets/145444799/041b900e-97aa-4da6-8ec1-6b10d014e73c)
-
-6. Navigate to the Main class of the hotel provider module.
-
-7. Write again the days for the forecast(Maximum 5) **It is important to enter the same number as in the weather provider to avoid errors**
-
-![Captura de pantalla 2024-01-03 a las 23 51 21](https://github.com/Nestpr/project1/assets/145444799/d3a689e3-5ce5-4dcb-8c0e-4d6c2d645f43)
-
-8. Execute the Main class:
+4. Execute the Main class:
 
 ![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
 
-9. After the execution of all the modules, a SQlite data base will be on the JDBC Url that you put on the arguments, you can check the final data there.
+5. Navigate to the Main class of the weather provider module:
 
-10. To stop the program's execution, simply stop running the Main clasess of both modules.
+6. Write the days for the forecast(Maximum 5).
+
+![Captura de pantalla 2024-01-03 a las 23 51 06](https://github.com/Nestpr/project1/assets/145444799/041b900e-97aa-4da6-8ec1-6b10d014e73c)
+
+7. Execute the Main class:
+
+![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
+
+
+8. Navigate to the Main class of the hotel provider module.
+
+9. Write again the days for the forecast(Maximum 5) **It is important to enter the same number as in the weather provider to avoid errors**
+
+![Captura de pantalla 2024-01-03 a las 23 51 21](https://github.com/Nestpr/project1/assets/145444799/d3a689e3-5ce5-4dcb-8c0e-4d6c2d645f43)
+
+10. Execute the Main class:
+
+![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
+
+11. After the execution of all the modules, a SQlite data base will be on the JDBC Url that you put on the arguments, you can check the final data there.
+
+12. To stop the program's execution, simply stop running the Main clasess of both modules.
 
 # Used Architecture: Model-Control
 
@@ -138,6 +149,8 @@ The Model-Control Design is based on dividing the application into two main comp
 ## Class Diagram
 ![Captura de pantalla 2023-12-09 a las 13 12 42](https://github.com/Nestpr/project1/assets/145444799/b6bbf4b7-3bf4-41f2-9927-da09f262bf4f)
 ![Captura de pantalla 2023-12-09 a las 13 30 10](https://github.com/Nestpr/project1/assets/145444799/a66295d5-2b3e-48f1-b15c-951a02cd0c39)
+![Captura de pantalla 2024-01-05 a las 16 51 08](https://github.com/Nestpr/project1/assets/145444799/75fcecb7-8afa-4712-88be-64e7ec5cd09b)
+![Captura de pantalla 2024-01-05 a las 16 56 43](https://github.com/Nestpr/project1/assets/145444799/1050fc8f-4d4a-48b9-b6fc-b8a751229860)
 
 ## How to ejecute the .Jar files
 
@@ -162,50 +175,97 @@ The Model-Control Design is based on dividing the application into two main comp
    ```
 Just change start for stop to finish the ActiveMQ execution.
 
-2. Execute Weather provider Jar on the terminal:
+2. Execute island-hotel-recommendation Jar on the terminal:
 
-   1.a - Navigate to the Weather Provider jar Directory and use this command to start it in the background:
+   1.a - Navigate to the island-hotel-recommendation jar Directory and use this command to start it in the background:
    1.b - It is necessary to place the arguments in the order shown and append an '&' at the end for it to run in the background.
    
 -On Mac/Unix based systems
 
    ```bash
-   cd /path/to/weather-provider.jar
+   cd /path/to/island-hotel-recommendation-1.0-SNAPSHOT.jar 
    ```
   ```bash
-   java -jar weather-provider-1.0-SNAPSHOT.jar API brokerUrl YourTopicName &
+   java -jar island-hotel-recommendation-1.0-SNAPSHOT.jar  BrokerURL TopicName ClientId SubscriptionName JdbcUrl &
    ```
 -On Windows
    ```bash
-   cd C:\path\to\weather-provider.jar
+   cd C:\path\to\island-hotel-recommendation-1.0-SNAPSHOT.jar
    ```
   ```bash
-   java -jar weather-provider-1.0-SNAPSHOT.jar API brokerUrl YourTopicName &
+   java -jar island-hotel-recommendation-1.0-SNAPSHOT.jar BrokerURL TopicName ClientId SubscriptionName JdbcUrl &
    ```
 
-3. Execute Event Store Builder Jar on the terminal:
+3. Execute event-store-builder Jar on the terminal:
 
    1.a - Navigate to the Event Store Builder Jar Directory and use this command to start it in the background:
    1.b - It is necessary to place the arguments in the order shown.
+
+**Very Important**
+
+**The clientID has to be different on the island-hotel-recommendation and event-store-builder to ensure proper execution.**
    
 -On Mac/Unix based systems
 
    ```bash
-   cd /path/to/event-store-builder.jar
+   cd /path/to/data-lake-1.0-SNAPSHOT.jar
    ```
   ```bash
-   java -jar event-store-builder-1.0-SNAPSHOT.jar outputDirectory brokerUrl YourTopicName YourClientId YourSubscriptionName
+   java -jar data-lake-1.0-SNAPSHOT.jar OutputDirectory BrokerUrl YourTopicName YourClientId2 YourSubscriptionName
    ```
 -On Windows
    ```bash
-   cd C:\path\to\event-store-builder.jar
+   cd C:\path\to\data-lake-1.0-SNAPSHOT.jar
    ```
   ```bash
-   java -jar event-store-builder-1.0-SNAPSHOT.jar outputDirectory brokerUrl YourTopicName YourClientId YourSubscriptionName
+   java -jar data-lake-1.0-SNAPSHOT.jar OutputDirectory BrokerUrl YourTopicName YourClientId YourSubscriptionName
    ```
-4. Finish both process using pkill -f.
+4. Execute weather-provider Jar on the terminal:
+
+   1.a - Navigate to the weather-provider jar Directory and use this command to start it in the background:
+   1.b - It is necessary to place the arguments in the order shown and append an '&' at the end for it to run in the background.
+   
+-On Mac/Unix based systems
+
    ```bash
-   pkill -f "java -jar weather-provider-1.0-SNAPSHOT.jar"
+   cd /path/to/weather-provider-1.0-SNAPSHOT.jar 
+   ```
+  ```bash
+   java -jar weather-provider-1.0-SNAPSHOT.jar API BrokerUrl TopicName &
+   ```
+-On Windows
+   ```bash
+   cd C:\path\to\weather-provider-1.0-SNAPSHOT.jar 
+   ```
+  ```bash
+   java -jar weather-provider-1.0-SNAPSHOT.jar API BrokerUrl TopicName &
+   ```
+5. Execute hotel-provider Jar on the terminal:
+
+   1.a - Navigate to the hotel-provider jar Directory and use this command to start it in the background:
+   1.b - It is necessary to place the arguments in the order shown and append an '&' at the end for it to run in the background.
+   
+-On Mac/Unix based systems
+
+   ```bash
+   cd /path/to/hotel-provider-1.0-SNAPSHOT.jar 
+   ```
+  ```bash
+   java -jar hotel-provider-1.0-SNAPSHOT.jar BrokerUrl TopicName &
+   ```
+-On Windows
+   ```bash
+   cd C:\path\to\hotel-provider-1.0-SNAPSHOT.jar 
+   ```
+  ```bash
+   java -jar hotel-provider-1.0-SNAPSHOT.jar BrokerUrl TopicName &
+   ```
+
+6. Finish both process using pkill -f.
+   ```bash
+   pkill -f "java -jar island-hotel-recommendation-1.0-SNAPSHOT.jar"
    pkill -f "java -jar event-store-builder-1.0-SNAPSHOT.jar"
+   pkill -f "java -jar weather-provider-1.0-SNAPSHOT.jar"
+   pkill -f "java -jar hotel-provider-1.0-SNAPSHOT.jar"
    ```
    
