@@ -175,50 +175,97 @@ The Model-Control Design is based on dividing the application into two main comp
    ```
 Just change start for stop to finish the ActiveMQ execution.
 
-2. Execute Weather provider Jar on the terminal:
+2. Execute island-hotel-recommendation Jar on the terminal:
 
-   1.a - Navigate to the Weather Provider jar Directory and use this command to start it in the background:
+   1.a - Navigate to the island-hotel-recommendation jar Directory and use this command to start it in the background:
    1.b - It is necessary to place the arguments in the order shown and append an '&' at the end for it to run in the background.
    
 -On Mac/Unix based systems
 
    ```bash
-   cd /path/to/weather-provider.jar
+   cd /path/to/island-hotel-recommendation-1.0-SNAPSHOT.jar 
    ```
   ```bash
-   java -jar weather-provider-1.0-SNAPSHOT.jar API brokerUrl YourTopicName &
+   java -jar island-hotel-recommendation-1.0-SNAPSHOT.jar  BrokerURL TopicName ClientId SubscriptionName JdbcUrl &
    ```
 -On Windows
    ```bash
-   cd C:\path\to\weather-provider.jar
+   cd C:\path\to\island-hotel-recommendation-1.0-SNAPSHOT.jar
    ```
   ```bash
-   java -jar weather-provider-1.0-SNAPSHOT.jar API brokerUrl YourTopicName &
+   java -jar island-hotel-recommendation-1.0-SNAPSHOT.jar BrokerURL TopicName ClientId SubscriptionName JdbcUrl &
    ```
 
-3. Execute Event Store Builder Jar on the terminal:
+3. Execute event-store-builder Jar on the terminal:
 
    1.a - Navigate to the Event Store Builder Jar Directory and use this command to start it in the background:
    1.b - It is necessary to place the arguments in the order shown.
+
+**Very Important**
+
+**The clientID has to be different on the island-hotel-recommendation and event-store-builder to ensure proper execution.**
    
 -On Mac/Unix based systems
 
    ```bash
-   cd /path/to/event-store-builder.jar
+   cd /path/to/data-lake-1.0-SNAPSHOT.jar
    ```
   ```bash
-   java -jar event-store-builder-1.0-SNAPSHOT.jar outputDirectory brokerUrl YourTopicName YourClientId YourSubscriptionName
+   java -jar data-lake-1.0-SNAPSHOT.jar OutputDirectory BrokerUrl YourTopicName YourClientId2 YourSubscriptionName
    ```
 -On Windows
    ```bash
-   cd C:\path\to\event-store-builder.jar
+   cd C:\path\to\data-lake-1.0-SNAPSHOT.jar
    ```
   ```bash
-   java -jar event-store-builder-1.0-SNAPSHOT.jar outputDirectory brokerUrl YourTopicName YourClientId YourSubscriptionName
+   java -jar data-lake-1.0-SNAPSHOT.jar OutputDirectory BrokerUrl YourTopicName YourClientId YourSubscriptionName
    ```
-4. Finish both process using pkill -f.
+4. Execute weather-provider Jar on the terminal:
+
+   1.a - Navigate to the weather-provider jar Directory and use this command to start it in the background:
+   1.b - It is necessary to place the arguments in the order shown and append an '&' at the end for it to run in the background.
+   
+-On Mac/Unix based systems
+
    ```bash
-   pkill -f "java -jar weather-provider-1.0-SNAPSHOT.jar"
+   cd /path/to/weather-provider-1.0-SNAPSHOT.jar 
+   ```
+  ```bash
+   java -jar weather-provider-1.0-SNAPSHOT.jar API BrokerUrl TopicName &
+   ```
+-On Windows
+   ```bash
+   cd C:\path\to\weather-provider-1.0-SNAPSHOT.jar 
+   ```
+  ```bash
+   java -jar weather-provider-1.0-SNAPSHOT.jar API BrokerUrl TopicName &
+   ```
+5. Execute hotel-provider Jar on the terminal:
+
+   1.a - Navigate to the hotel-provider jar Directory and use this command to start it in the background:
+   1.b - It is necessary to place the arguments in the order shown and append an '&' at the end for it to run in the background.
+   
+-On Mac/Unix based systems
+
+   ```bash
+   cd /path/to/hotel-provider-1.0-SNAPSHOT.jar 
+   ```
+  ```bash
+   java -jar hotel-provider-1.0-SNAPSHOT.jar BrokerUrl TopicName &
+   ```
+-On Windows
+   ```bash
+   cd C:\path\to\hotel-provider-1.0-SNAPSHOT.jar 
+   ```
+  ```bash
+   java -jar hotel-provider-1.0-SNAPSHOT.jar BrokerUrl TopicName &
+   ```
+
+6. Finish both process using pkill -f.
+   ```bash
+   pkill -f "java -jar island-hotel-recommendation-1.0-SNAPSHOT.jar"
    pkill -f "java -jar event-store-builder-1.0-SNAPSHOT.jar"
+   pkill -f "java -jar weather-provider-1.0-SNAPSHOT.jar"
+   pkill -f "java -jar hotel-provider-1.0-SNAPSHOT.jar"
    ```
    
