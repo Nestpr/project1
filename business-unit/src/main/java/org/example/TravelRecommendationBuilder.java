@@ -2,7 +2,6 @@ package org.example;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -79,6 +78,7 @@ public class TravelRecommendationBuilder implements Recommendation {
 	private void addIslandTemperature(String island, double temperature) {
 		temperaturesPerIsland.put(island, temperaturesPerIsland.getOrDefault(island, 0.0) + temperature);
 	}
+
 	public static void saveEvent(String jsonEvent) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode rootNode = null;
@@ -97,18 +97,16 @@ public class TravelRecommendationBuilder implements Recommendation {
 		String ts = rootNode.at("/ts").asText();
 		String ss = rootNode.at("/ss").asText();
 		try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
-
-			String createTableSQL = "CREATE TABLE IF NOT EXISTS eventos "
+			String createTableSQL = "CREATE TABLE IF NOT EXISTS events "
 					+ "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " hotel_name TEXT, hotel_key TEXT, island TEXT, "
 					+ " check_out_date TEXT, average_price_days TEXT, "
 					+ " cheap_price_days TEXT, high_price_days TEXT, "
-					+ " ts TEXT, ss TEXT)";
+					+ " ts TEXT, ss TEXT, event_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
 			try (PreparedStatement createTableStatement = connection.prepareStatement(createTableSQL)) {
 				createTableStatement.executeUpdate();
 			}
-
-			String insertEventSQL = "INSERT INTO eventos "
+			String insertEventSQL = "INSERT OR REPLACE INTO events "
 					+ "(hotel_name, hotel_key, island, check_out_date, average_price_days, "
 					+ " cheap_price_days, high_price_days, ts, ss) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -125,7 +123,12 @@ public class TravelRecommendationBuilder implements Recommendation {
 				insertEventStatement.executeUpdate();
 			}
 
-			System.out.println("Evento guardado correctamente en la base de datos.");
+			String deleteOldEventsSQL = "DELETE FROM events WHERE id NOT IN (SELECT id FROM events ORDER BY event_datetime DESC LIMIT 5)";
+			try (PreparedStatement deleteOldEventsStatement = connection.prepareStatement(deleteOldEventsSQL)) {
+				deleteOldEventsStatement.executeUpdate();
+			}
+
+			System.out.println("Event saved successfully in the database.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

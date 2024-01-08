@@ -31,7 +31,7 @@ public class WeatherController{
 			@Override
 			public void run() {
 				execute();
-				System.out.println("La función se ejecutó");
+				System.out.println("The function was executed");
 			}
 		};
 		timer.schedule(weatherTask, 0, periodo);

@@ -36,7 +36,6 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 		}
 		return weatherList;
 	}
-
 	public String getUrl(Location location) {
 		String longitudStr = Double.toString(location.getLongitude());
 		String latitudStr = Double.toString(location.getLatitude());

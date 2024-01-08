@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 import static org.example.control.InstantCreator.generateInstantListAtHour;
 
 public class Main2 {
@@ -13,7 +12,6 @@ public class Main2 {
 		String brokerURL = args[0];
 		String topicName = args[1];
 		List<HotelKey> hotelKeys = new ArrayList<>();
-
 		hotelKeys.add(new HotelKey("Santa Catalina, a Royal Hideaway Hotel", "g187472-d228489", "Las Palmas de Gran Canaria"));
 		hotelKeys.add(new HotelKey("Hotel Cristina", "g187472-d228541", "Las Palmas de Gran Canaria"));
 		hotelKeys.add(new HotelKey("Occidental Las Palmas", "g187472-d19875360", "Las Palmas de Gran Canaria"));
@@ -58,10 +56,10 @@ public class Main2 {
 		Scanner scanner = new Scanner(System.in);
 		int sharedNumber;
 		while (true) {
-			System.out.print("Vuelva a introducir el número de días (Debe ser igual al introducido anteriormente): ");
+			System.out.print("Please enter the number of days again (It must be the same as previously entered): ");
 
 			while (!scanner.hasNextInt()) {
-				System.out.print("Por favor, ingrese un número válido: ");
+				System.out.print("Please enter a valid number: ");
 				scanner.next();
 			}
 
@@ -71,7 +69,7 @@ public class Main2 {
 				sharedNumber = number;
 				break;
 			} else {
-				System.out.println("Por favor, ingrese un número entre 1 y 5.");
+				System.out.println("Please enter a number between 1 and 5.");
 			}
 		}
 

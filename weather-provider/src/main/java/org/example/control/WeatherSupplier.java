@@ -7,6 +7,6 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 public interface WeatherSupplier {
-	public List<Weather> getWeather(Location location, List<Instant> instantList);
+	List<Weather> getWeather(Location location, List<Instant> instantList);
 
 }

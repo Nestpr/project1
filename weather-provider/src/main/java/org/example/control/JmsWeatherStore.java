@@ -6,7 +6,6 @@ import javax.jms.*;
 import java.lang.reflect.Type;
 import java.time.Instant;
 import java.util.List;
-
 public class JmsWeatherStore implements WeatherStore {
 	private Connection connection;
 	private Session session;

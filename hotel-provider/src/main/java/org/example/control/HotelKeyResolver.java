@@ -13,7 +13,6 @@ import java.io.StringReader;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
 public class HotelKeyResolver implements HotelSupplier{
 	private static String weatherTemplate = "https://data.xotelo.com/api/heatmap?";
 	private String checkOutDate;

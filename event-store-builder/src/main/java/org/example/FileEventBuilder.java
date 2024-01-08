@@ -14,7 +14,7 @@ public class FileEventBuilder implements EventStoreBuilder{
 		try {
 			String timestamp = extractTimestampFromEvent(eventData);
 			String ss = extractSSFromEvent(eventData);
-			String directoryPath = outputDirectory + "/eventstore/datalake/" + ss;
+			String directoryPath = outputDirectory + "/eventstore/prediction.HotelsIsland/datalake/" + ss;
 			String fileName = directoryPath + "/" + getYYYYMMDD(timestamp) + ".events";
 			File directory = new File(directoryPath);
 			if (!directory.exists()) {

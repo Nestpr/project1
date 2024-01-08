@@ -4,13 +4,11 @@ import org.example.model.HotelKey;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 public class HotelController {
 	private List<HotelKey> hotelKeys;
 	private String checkOutDate;
 	private HotelSupplier hotelSupplier;
 	private HotelStore hotelStore;
-
 	public HotelController(List<HotelKey> hotelKeys, String checkOutDate, HotelSupplier hotelSupplier, HotelStore hotelStore) {
 		this.hotelKeys = hotelKeys;
 		this.checkOutDate = checkOutDate;
@@ -28,7 +26,7 @@ public class HotelController {
 			@Override
 			public void run() {
 				execute();
-				System.out.println("La función se ejecutó");
+				System.out.println("The function was executed.");
 			}
 		};
 		timer.schedule(weatherTask, 0, periodo);
