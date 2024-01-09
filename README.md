@@ -4,7 +4,7 @@ output:
   html_document: default
 ---
 
-# Final Practice: Hotel recommendations for an island based on its climate.
+# Final Practice: Hotels recommendations for an island based on its climate.
 
 ### Name: Néstor Ortega Pérez
 ### Subject: Desarrollo de Aplicaciones para Ciencia de Datos
@@ -16,17 +16,17 @@ output:
 ---
 This application is presented as a utilitarian tool designed to assist users in choosing accommodations in the Canary Islands, based on weather forecasts for the number of days they choose (Maximum: 5 days). The application calculates the island with the best weather forecast and recommends 5 of its top-rated hotels according to TripAdvisor, along with the dates when their prices are the cheapest, average, and most expensive. This enables the user to book a hotel based on their daily costs on a certain island.
 
-This system consists of five main components: the Prediction Provider, the Hotel Provider, the Broker (using ActiveMQ), and the Event Store Builder(Data Lake) and the Business-Unit(island-hotel-recommendation).
+This system consists of five main components: the Weather Provider, the Hotel Provider, the Broker (using ActiveMQ),the Event Store Builder(data-lake) and the Business-Unit(island-hotel-recommendation).
 
-The Prediction Provider acquires every 6 hours meteorological data from the 8 Canary Islands, generates events in JSON format with detailed information, and sends them to the Broker through the topic prediction.Weather.
+The Weather Provider acquires every 6 hours meteorological data from the 8 Canary Islands, generates events in JSON format with detailed information, and sends them to the Broker through the topic prediction.Weather.
 
 The Hotel Provider acquires every 6 hours the data from the five best hotels of each island along with the dates when their prices are the cheapest, average, and most expensive. It generates events in JSON format with detailed information, and sends them to the Broker through the topic prediction.Hotel.
 
-The Broker, implemented using ActiveMQ, serves as an intermediary for communication between components. It receives meteorological and hotel events from the Prediction and Hotel Providers and publishes them on the topics, allowing other modules to subscribe and consume this information.
+The Broker, implemented using ActiveMQ, serves as an intermediary for communication between components. It receives meteorological and hotel events from the Weather and Hotel Providers and publishes them on the topics, allowing other modules to subscribe and consume this information.
 
-The Event Store Builder(Data Lake), subscribed to the topics, is responsible for storing these events in an organized directory structure. 
+The Event Store Builder(data-lake), subscribed to the topics, is responsible for storing these events in an organized directory structure. 
 
-The Business Unit, suscribed to the topics, takes the data from the Prediction and Hotel providers and calculates the island with the best climate for the prediction, creates a data base (SQlite) with the best five hotels of the island with the best climate and the dates when their prices are the cheapest, average, and most expensive. This is the final data that is going to be consumed by the client.
+The Business Unit(island-hotel-recommendation), suscribed to the topics, takes the data from the Weather and Hotel providers and calculates the island with the best climate for the prediction, creates a data base (SQlite) with the best five hotels of the island with the best climate and the dates when their prices are the cheapest, average, and most expensive. This is the final data that is going to be consumed by the client.
 
 ---
 
@@ -91,29 +91,29 @@ The steps to be executed are as follows:
    ```
 To shut down both process you need to press control + C on the terminal.
 
-1. Navigate to the Main class of the business unit(island-hotel-recommendation) module.
+1. Navigate to the Main class of the weather provider module:
 
-2. Enter the days(Maximum 5).
+2. Execute the Main class:
+
+![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
+
+3. Navigate to the Main class of the hotel provider module.
+
+4. Execute the Main class:
+
+![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
+
+5. Navigate to the Main class of the event store builder module.
+
+6. Execute the Main class:
+
+![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
+
+7. Navigate to the Main class of the business unit(island-hotel-recommendation) module.
+
+8. Enter the days(Maximum 5).
 
 ![Captura de pantalla 2024-01-09 a las 13 27 14](https://github.com/Nestpr/project1/assets/145444799/2fbee569-6add-45af-a536-9a537cc2abd4)
-
-3. Execute the Main class:
-
-![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
-
-4. Navigate to the Main class of the event store builder module.
-
-5. Execute the Main class:
-
-![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
-
-6. Navigate to the Main class of the weather provider module:
-
-7. Execute the Main class:
-
-![Captura de pantalla 2023-11-17 a las 23 41 49](https://github.com/Nestpr/project1/assets/145444799/11356b21-168c-4e34-9bca-92e6547e3483)
-
-8. Navigate to the Main class of the hotel provider module.
 
 9. Execute the Main class:
 
@@ -142,7 +142,7 @@ The Model-Control Design is based on dividing the application into two main comp
 ![Captura de pantalla 2024-01-05 a las 16 51 08](https://github.com/Nestpr/project1/assets/145444799/75fcecb7-8afa-4712-88be-64e7ec5cd09b)
 ![Captura de pantalla 2024-01-09 a las 13 26 48](https://github.com/Nestpr/project1/assets/145444799/e112d5b0-7581-4f99-b730-f15659aa5344)
 
-## How to ejecute the .Jar files
+## How to execute the .Jar files
 
 **Very important**
 
@@ -209,9 +209,9 @@ Just change start for stop to finish the ActiveMQ execution.
   ```bash
    java -jar hotel-provider-1.0-SNAPSHOT.jar BrokerUrl &
    ```
-4. Execute event-store-builder Jar on the terminal:
+4. Execute data-lake Jar on the terminal:
 
-   4.a - Navigate to the Event Store Builder Jar Directory and use this command to start it in the background:
+   4.a - Navigate to the data-lake Jar Directory and use this command to start it in the background:
    4.b - It is necessary to place the arguments in the order shown and append an '&' at the end for it to run in the background.
    
 -On Mac/Unix based systems
