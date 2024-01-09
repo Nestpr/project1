@@ -1,7 +1,14 @@
 package org.example;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import javax.jms.*;
-public class TopicSubscriber implements Subscriber{
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class TopicSubscriber implements Subscriber {
 	private Connection connection;
 	private Session session;
 	private final String brokerURL;
@@ -13,7 +20,8 @@ public class TopicSubscriber implements Subscriber{
 		this.travelRecommendationBuilder = travelRecommendationBuilder;
 		this.number = number;
 	}
-	public void start(){
+
+	public void start() {
 		String clientID = "clientID";
 		try {
 			ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL);
@@ -29,12 +37,24 @@ public class TopicSubscriber implements Subscriber{
 					if (message instanceof TextMessage) {
 						TextMessage textMessage = (TextMessage) message;
 						String eventData = textMessage.getText();
-						System.out.println("Received event: " + eventData);
-						this.travelRecommendationBuilder.recommendation(eventData);
-						message.acknowledge();
+						LocalDate fechaActual = LocalDate.now();
+						int diaActual = fechaActual.getDayOfMonth();
+						ObjectMapper objectMapper = new ObjectMapper();
+						JsonNode jsonNode = objectMapper.readTree(eventData);
+						String predictionTimeString = jsonNode.path("predictionTime").asText();
+						LocalDateTime predictionTime = LocalDateTime.parse(predictionTimeString, DateTimeFormatter.ISO_DATE_TIME);
+						int diaDePredictionTime = predictionTime.getDayOfMonth();
+						int diafinal = diaActual + number;
+						if (diaActual <= diaDePredictionTime && diaDePredictionTime <= diafinal) {
+							System.out.println("Received event: " + eventData);
+							this.travelRecommendationBuilder.recommendation(eventData);
+							message.acknowledge();
+						}
 					}
 				} catch (JMSException e) {
 					e.printStackTrace();
+				} catch (JsonProcessingException e) {
+					throw new RuntimeException(e);
 				}
 			};
 			subscriber.setMessageListener(messageListener);
@@ -51,7 +71,7 @@ public class TopicSubscriber implements Subscriber{
 						message.acknowledge();
 					}
 				} catch (JMSException e) {
-					e.printStackTrace();
+					throw new RuntimeException(e);
 				}
 			};
 			subscriber2.setMessageListener(messageListener2);

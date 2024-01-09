@@ -6,7 +6,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import static org.example.control.InstantCreator.generateInstantListAtHour;
-
 public class Main2 {
 	public static void main(String[] args) {
 		String brokerURL = args[0];

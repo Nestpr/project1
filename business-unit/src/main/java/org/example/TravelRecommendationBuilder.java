@@ -98,26 +98,26 @@ public class TravelRecommendationBuilder implements Recommendation {
 			String createTableSQL = "CREATE TABLE IF NOT EXISTS events "
 					+ "(id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " hotel_name TEXT, hotel_key TEXT, island TEXT, "
-					+ " check_out_date TEXT, average_price_days TEXT, "
+					+ " average_price_days TEXT, "
 					+ " cheap_price_days TEXT, high_price_days TEXT, "
 					+ " ts TEXT, ss TEXT, event_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
 			try (PreparedStatement createTableStatement = connection.prepareStatement(createTableSQL)) {
 				createTableStatement.executeUpdate();
 			}
 			String insertEventSQL = "INSERT OR REPLACE INTO events "
-					+ "(hotel_name, hotel_key, island, check_out_date, average_price_days, "
+					+ "(hotel_name, hotel_key, island, average_price_days, "
 					+ " cheap_price_days, high_price_days, ts, ss) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			try (PreparedStatement insertEventStatement = connection.prepareStatement(insertEventSQL)) {
 				insertEventStatement.setString(1, hotelName);
 				insertEventStatement.setString(2, hotelKey);
 				insertEventStatement.setString(3, island);
-				insertEventStatement.setString(4, checkOutDate);
-				insertEventStatement.setString(5, averagePriceDays.toString());
-				insertEventStatement.setString(6, cheapPriceDays.toString());
-				insertEventStatement.setString(7, highPriceDays.toString());
-				insertEventStatement.setString(8, ts);
-				insertEventStatement.setString(9, ss);
+				//insertEventStatement.setString(4, checkOutDate);
+				insertEventStatement.setString(4, averagePriceDays.toString());
+				insertEventStatement.setString(5, cheapPriceDays.toString());
+				insertEventStatement.setString(6, highPriceDays.toString());
+				insertEventStatement.setString(7, ts);
+				insertEventStatement.setString(8, ss);
 				insertEventStatement.executeUpdate();
 			}
 
