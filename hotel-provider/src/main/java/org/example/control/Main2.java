@@ -10,7 +10,6 @@ import static org.example.control.InstantCreator.generateInstantListAtHour;
 public class Main2 {
 	public static void main(String[] args) {
 		String brokerURL = args[0];
-		String topicName = args[1];
 		List<HotelKey> hotelKeys = new ArrayList<>();
 		hotelKeys.add(new HotelKey("Santa Catalina, a Royal Hideaway Hotel", "g187472-d228489", "Las Palmas de Gran Canaria"));
 		hotelKeys.add(new HotelKey("Hotel Cristina", "g187472-d228541", "Las Palmas de Gran Canaria"));
@@ -52,34 +51,13 @@ public class Main2 {
 		hotelKeys.add(new HotelKey("Gloria Palace Thalasso & Hotel", "g562818-d237094", "Maspalomas"));
 		hotelKeys.add(new HotelKey("HD Parque Cristobal", "g562819-d600110", "Maspalomas"));
 		hotelKeys.add(new HotelKey("Axel Beach Maspalomas", "g562819-d4107099", "Maspalomas"));
-
-		Scanner scanner = new Scanner(System.in);
-		int sharedNumber;
-		while (true) {
-			System.out.print("Please enter the number of days again (It must be the same as previously entered): ");
-
-			while (!scanner.hasNextInt()) {
-				System.out.print("Please enter a valid number: ");
-				scanner.next();
-			}
-
-			int number = scanner.nextInt();
-
-			if (number >= 1 && number <= 5) {
-				sharedNumber = number;
-				break;
-			} else {
-				System.out.println("Please enter a number between 1 and 5.");
-			}
-		}
-
-		List<Instant> instantList = generateInstantListAtHour(12, sharedNumber);
-		Instant instant = instantList.get(sharedNumber - 1);
+		List<Instant> instantList = generateInstantListAtHour(12, 5);
+		Instant instant = instantList.get(5 - 1);
 		LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String date = localDate.format(formatter);
 		HotelKeyResolver hotelKeyResolver = new HotelKeyResolver(date);
-		JmsHotelStore jmsHotelStore = new JmsHotelStore(brokerURL, topicName);
+		JmsHotelStore jmsHotelStore = new JmsHotelStore(brokerURL);
 		HotelController hotelController = new HotelController(hotelKeys, date, hotelKeyResolver, jmsHotelStore);
 		hotelController.timer();
 	}

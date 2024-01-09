@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 public class TravelRecommendationBuilder implements Recommendation {
 	private Map<String, Double> temperaturesPerIsland = new HashMap<>();
 	private List<String> hotels = new ArrayList<>();
@@ -61,7 +60,6 @@ public class TravelRecommendationBuilder implements Recommendation {
 			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode jsonNode = objectMapper.readTree(event);
 			String ssValue = jsonNode.path("ss").asText();
-
 			if ("OpenWeatherMapSupplier".equals(ssValue)) {
 				double temperature = jsonNode.path("temperature").asDouble();
 				String island = jsonNode.path("location").path("island").asText();

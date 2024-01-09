@@ -14,16 +14,32 @@ public class FileEventBuilder implements EventStoreBuilder{
 		try {
 			String timestamp = extractTimestampFromEvent(eventData);
 			String ss = extractSSFromEvent(eventData);
-			String directoryPath = outputDirectory + "/eventstore/prediction.HotelsIsland/datalake/" + ss;
-			String fileName = directoryPath + "/" + getYYYYMMDD(timestamp) + ".events";
-			File directory = new File(directoryPath);
-			if (!directory.exists()) {
-				directory.mkdirs();
+			if ("Xotelo".equals(ss)) {
+				String directoryPath = outputDirectory + "datalake/eventstore/" + "prediction.Hotel"+ "/" + ss;
+				String fileName = directoryPath + "/" + getYYYYMMDD(timestamp) + ".events";
+				File directory = new File(directoryPath);
+				if (!directory.exists()) {
+					directory.mkdirs();
+				}
+				FileWriter fileWriter = new FileWriter(fileName, true);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				bufferedWriter.write(eventData + "\n");
+				bufferedWriter.close();
 			}
-			FileWriter fileWriter = new FileWriter(fileName, true);
-			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			bufferedWriter.write(eventData + "\n");
-			bufferedWriter.close();
+			else if ("OpenWeatherMapSupplier".equals(ss)){
+				String directoryPath = outputDirectory + "datalake/eventstore/" + "prediction.Weather" + "/" + ss;
+				String fileName = directoryPath + "/" + getYYYYMMDD(timestamp) + ".events";
+				File directory = new File(directoryPath);
+				if (!directory.exists()) {
+					directory.mkdirs();
+				}
+				FileWriter fileWriter = new FileWriter(fileName, true);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				bufferedWriter.write(eventData + "\n");
+				bufferedWriter.close();
+			}else {
+				System.out.println("Evento no reconocido: " + ss);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

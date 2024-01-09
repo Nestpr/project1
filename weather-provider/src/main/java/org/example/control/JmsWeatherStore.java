@@ -11,10 +11,8 @@ public class JmsWeatherStore implements WeatherStore {
 	private Session session;
 	private MessageProducer producer;
 	private String brokerURL;
-	private String destinationName;
-	public JmsWeatherStore(String brokerURL, String destinationName) {
+	public JmsWeatherStore(String brokerURL) {
 		this.brokerURL = brokerURL;
-		this.destinationName = destinationName;
 	}
 	public void storeWeather(List<Weather> weatherList) {
 		for (Weather weather : weatherList) {
@@ -37,7 +35,7 @@ public class JmsWeatherStore implements WeatherStore {
 			connection = connectionFactory.createConnection();
 			connection.start();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			Destination destination = session.createTopic(destinationName);
+			Destination destination = session.createTopic("prediction.Weather");
 			producer = session.createProducer(destination);
 		} catch (JMSException e) {
 			e.printStackTrace();

@@ -4,27 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="Project 3 (All modules connected)">
+    <list default="true" id="79e29292-b796-4ffc-b58f-a0160cf7f881" name="Changes" comment="Project 3 (Final Version)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business-unit/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/business-unit/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business-unit/src/main/java/org/example/Main3.java" beforeDir="false" afterPath="$PROJECT_DIR$/business-unit/src/main/java/org/example/Main3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/business-unit/src/main/java/org/example/TopicSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/business-unit/src/main/java/org/example/TopicSubscriber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/business-unit/src/main/java/org/example/TravelRecommendationBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/business-unit/src/main/java/org/example/TravelRecommendationBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-store-builder/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/event-store-builder/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/event-store-builder/src/main/java/org/example/FileEventBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-store-builder/src/main/java/org/example/FileEventBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-store-builder/src/main/java/org/example/Subscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-store-builder/src/main/java/org/example/Subscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-provider/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-provider/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/control/HotelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/control/HotelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/control/HotelKeyResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/control/HotelKeyResolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event-store-builder/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-store-builder/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event-store-builder/src/main/java/org/example/TopicSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-store-builder/src/main/java/org/example/TopicSubscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/control/JmsHotelStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/control/JmsHotelStore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/control/Main2.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/control/Main2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/model/HotelKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-provider/src/main/java/org/example/model/HotelKey.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel_db.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/InstantCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/InstantCreator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/JmsWeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/JmsWeatherStore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/Main1.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/Main1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/OpenWeatherMapSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/OpenWeatherMapSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/WeatherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/WeatherStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/WeatherStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/WeatherSupplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-provider/src/main/java/org/example/control/WeatherSupplier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,8 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -99,7 +91,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="data-lake" />
-      <option name="PROGRAM_PARAMETERS" value="$USER_HOME$/Desktop/ tcp://localhost:61616 YourTopicName YourClientId1 YourSubscriptionName " />
+      <option name="PROGRAM_PARAMETERS" value="$USER_HOME$/Desktop/ tcp://localhost:61616" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.*" />
@@ -113,7 +105,7 @@
     <configuration name="Main1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.control.Main1" />
       <module name="weather-provider" />
-      <option name="PROGRAM_PARAMETERS" value="82272d9470b9aa37fb9c5fa221ea12be tcp://localhost:61616 YourTopicName" />
+      <option name="PROGRAM_PARAMETERS" value="82272d9470b9aa37fb9c5fa221ea12be tcp://localhost:61616" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.control.*" />
@@ -127,7 +119,7 @@
     <configuration name="Main2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.control.Main2" />
       <module name="hotel-provider" />
-      <option name="PROGRAM_PARAMETERS" value="tcp://localhost:61616 YourTopicName" />
+      <option name="PROGRAM_PARAMETERS" value="tcp://localhost:61616" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.control.*" />
@@ -141,7 +133,7 @@
     <configuration name="Main3" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main3" />
       <module name="island-hotel-recommendation" />
-      <option name="PROGRAM_PARAMETERS" value="tcp://localhost:61616 YourTopicName YourClientId YourSubscriptionName jdbc:sqlite:hotel_db.db" />
+      <option name="PROGRAM_PARAMETERS" value="tcp://localhost:61616 jdbc:sqlite:hotel_db.db" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.*" />
@@ -207,9 +199,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main3" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main2" />
         <item itemvalue="Application.Main1" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main4" />
       </list>
     </recent_temporary>
@@ -351,7 +343,23 @@
       <option name="project" value="LOCAL" />
       <updated>1704472456463</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Project 3 (Final Version)">
+      <option name="closed" value="true" />
+      <created>1704732050830</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1704732050830</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Project 3 (Final Version)">
+      <option name="closed" value="true" />
+      <created>1704732083464</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1704732083464</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -382,7 +390,8 @@
     <MESSAGE value="Project 3 (New Sensor and Business Unit improvements)" />
     <MESSAGE value="Project 3 (DataMart Implemented)" />
     <MESSAGE value="Project 3 (All modules connected)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project 3 (All modules connected)" />
+    <MESSAGE value="Project 3 (Final Version)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project 3 (Final Version)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

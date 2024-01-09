@@ -14,10 +14,8 @@ public class JmsHotelStore implements HotelStore{
 	private Session session;
 	private MessageProducer producer;
 	private String brokerURL;
-	private String destinationName;
-	public JmsHotelStore(String brokerURL, String destinationName) {
+	public JmsHotelStore(String brokerURL) {
 		this.brokerURL = brokerURL;
-		this.destinationName = destinationName;
 	}
 	public void storeHotel(List<Hotel> hotels) {
 		for (Hotel hotel : hotels) {
@@ -40,7 +38,7 @@ public class JmsHotelStore implements HotelStore{
 			connection = connectionFactory.createConnection();
 			connection.start();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			Destination destination = session.createTopic(destinationName);
+			Destination destination = session.createTopic("prediction.Hotel");
 			producer = session.createProducer(destination);
 		} catch (JMSException e) {
 			e.printStackTrace();
