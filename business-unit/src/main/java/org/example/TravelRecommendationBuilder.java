@@ -112,7 +112,6 @@ public class TravelRecommendationBuilder implements Recommendation {
 				insertEventStatement.setString(1, hotelName);
 				insertEventStatement.setString(2, hotelKey);
 				insertEventStatement.setString(3, island);
-				//insertEventStatement.setString(4, checkOutDate);
 				insertEventStatement.setString(4, averagePriceDays.toString());
 				insertEventStatement.setString(5, cheapPriceDays.toString());
 				insertEventStatement.setString(6, highPriceDays.toString());
@@ -120,7 +119,6 @@ public class TravelRecommendationBuilder implements Recommendation {
 				insertEventStatement.setString(8, ss);
 				insertEventStatement.executeUpdate();
 			}
-
 			String deleteOldEventsSQL = "DELETE FROM events WHERE id NOT IN (SELECT id FROM events ORDER BY event_datetime DESC LIMIT 5)";
 			try (PreparedStatement deleteOldEventsStatement = connection.prepareStatement(deleteOldEventsSQL)) {
 				deleteOldEventsStatement.executeUpdate();
